@@ -46,50 +46,57 @@ public class Model {
 	//the model doesn't need to get walkable
 	//placers for robot, source and destination
 	public void place(int x, int y, Robot new_bot) throws ModelException{
-		try{
-			board[y][x].place(new_bot);
-			botPos = new int[] {x, y};
-			System.out.println("Bot placed on"+x+"'"+y);
-		}
-		catch(CellException cell)
-		{
-			throw new ModelException("Robot cannot be placed on cell");
-		}
-		catch(Exception GeneralE){
-			System.out.println(GeneralE.getStackTrace());
-			throw new ModelException("An unknown exception occurred, printed trace");
+		if(!boardHasBot()){
+			try{
+				board[y][x].place(new_bot);
+				botPos = new int[] {x, y};
+				System.out.println("Bot placed on"+x+"'"+y);
+
+			}
+			catch(CellException cell)
+			{
+				throw new ModelException("Robot cannot be placed on cell");
+			}
+			catch(Exception GeneralE){
+				System.out.println(GeneralE.getStackTrace());
+				throw new ModelException("An unknown exception occurred, printed trace");
+			}
 		}
 	}
 	//source placer
 	public void place(int x, int y, Source new_src) throws ModelException{
-		try{
-			board[y][x].place(new_src);
-		}
-		catch(CellException cell)
-		{
-			throw new ModelException("Source cannot be placed on cell");
-		}
-		catch(Exception GeneralE){
-			System.out.println(GeneralE.getStackTrace());
-			throw new ModelException("An unknown exception occurred, printed trace");
+		if(!boardHasSrc()){
+			try{
+				board[y][x].place(new_src);
+			}
+			catch(CellException cell)
+			{
+				throw new ModelException("Source cannot be placed on cell");
+			}
+			catch(Exception GeneralE){
+				System.out.println(GeneralE.getStackTrace());
+				throw new ModelException("An unknown exception occurred, printed trace");
+			}
 		}
 	}
 	//destination placer
 	public void place(int x, int y, Destination new_dst) throws ModelException{
-		try{
-			board[y][x].place(new_dst);
-		}
-		catch(CellException cell)
-		{
-			throw new ModelException("Destination cannot be placed on cell");
-		}
-		catch(Exception GeneralE){
-			System.out.println(GeneralE.getStackTrace());
-			throw new ModelException("An unknown exception occurred, printed trace");
+		if(!boardHasDst()){
+			try{
+				board[y][x].place(new_dst);
+			}
+			catch(CellException cell)
+			{
+				throw new ModelException("Destination cannot be placed on cell");
+			}
+			catch(Exception GeneralE){
+				System.out.println(GeneralE.getStackTrace());
+				throw new ModelException("An unknown exception occurred, printed trace");
+			}
 		}
 	}
 	//the model doesn't need to get walkable
-	//placers for robot, source and destination
+	//removers for robot, source and destination
 	//there really should be a method that picks up the robot to move it.
 	public Robot removeBot(int x, int y) throws ModelException{
 		try{
@@ -104,7 +111,7 @@ public class Model {
 			throw new ModelException("An unknown exception occurred, printed trace");
 		}
 	}
-	//source placer
+	//source remover
 	public Source removeSrc(int x, int y) throws ModelException{
 		try{
 			return board[y][x].removeSrc();
@@ -118,7 +125,7 @@ public class Model {
 			throw new ModelException("An unknown exception occurred, printed trace");
 		}
 	}
-	//destination placer
+	//destination remover
 	public Destination removeDst(int x, int y) throws ModelException{
 		try{
 			return board[y][x].removeDst();
@@ -148,6 +155,45 @@ public class Model {
 	public boolean hasDst(int x, int y){
 		return(this.board[y][x].hasDst());
 	}
+	//checking the whole board for the items
+	/*the only reason these methods exist is to prevent the user from
+	 * placing multiple items because otherwise out pathfinding doesn't 
+	 * work.
+	 */
+	public boolean boardHasBot(){
+		for(int i = 0; i<10; i++){
+			for(int n = 0; n<10; n++){
+				if(hasBot(i,n)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	//check if the board has a destination on it
+	public boolean boardHasDst(){
+		for(int i = 0; i<10; i++){
+			for(int n = 0; n<10; n++){
+				if (hasDst(i,n)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	//check if the board has a source on it
+	public boolean boardHasSrc(){
+		for(int i = 0; i<10; i++){
+			for(int n = 0; n<10; n++){
+				if (hasSrc(i,n)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	//methods for moving the robot
 	public void moveRobot(char v){
 		Robot temp_bot;
 		try {

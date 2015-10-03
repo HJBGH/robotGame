@@ -18,4 +18,8 @@ public class Source {
 	public void dropped(){
 		held = false;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
 }

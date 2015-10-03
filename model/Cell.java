@@ -5,6 +5,7 @@ public class Cell {
 	private Robot bot;
 	private Source source;
 	private Destination dest; //dest short for destination.
+	public int weight;
 	
 	public Cell(){
 		// empty constructor
