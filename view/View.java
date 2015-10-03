@@ -56,7 +56,7 @@ public class View extends JFrame{
 		
 		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
 		// used if you want to make frame fullscreen - need to import dimension first
-		this.setBounds(0, 0, 800, 800);
+		this.setBounds(0, 0, 900, 700);
 		/*this.setVisible(true); setting visible in the constructor
 		 * was causing weird problems where the window would appear twice
 		 * but any changes made to the data would only appear once.

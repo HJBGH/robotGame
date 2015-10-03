@@ -11,7 +11,6 @@ public class CommandThread implements Runnable
 	private View the_view;
 
 	
-	
 	public CommandThread(View the_view, Model the_model,
 			ArrayList<String> commands)
 	{
@@ -26,7 +25,10 @@ public class CommandThread implements Runnable
 	{
 		for (String cmd : commands)
 		{
-			
+			if(the_model.checkForWin()){
+				the_view.set_alert("WINRAR IS YOU");
+				return;
+			};
 			if ((cmd.toUpperCase()).equals("PICK"))
 			{
 				the_model.pickup();

@@ -207,6 +207,7 @@ public class Model {
 		case 'N':
 			try {
 				this.place(botPos[0], botPos[1]-1, temp_bot);
+				System.out.println("Moved north");
 			} catch (ModelException e) {
 				// TODO Auto-generated catch block
 				try {
@@ -221,6 +222,7 @@ public class Model {
 		case 'E':
 			try {
 				this.place(botPos[0]+1, botPos[1], temp_bot);
+				System.out.println("Moved east");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -234,6 +236,7 @@ public class Model {
 		case 'S':
 			try {
 				this.place(botPos[0], botPos[1]+1, temp_bot);
+				System.out.println("Moved south");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -247,6 +250,7 @@ public class Model {
 		case 'W':
 			try {
 				this.place(botPos[0]-1, botPos[1], temp_bot);
+				System.out.println("Moved west");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -260,12 +264,25 @@ public class Model {
 		}
 	}
 	
-	//telling the cell to tell it's robot to hold the source
+	//telling the cell to tell its robot to hold the source
 	public void pickup(){
 		board[botPos[1]][botPos[0]].pickup();
 	}
-	//telling the cell to tell it's robot to put down the source
+	//telling the cell to tell its robot to put down the source
 	public void drop(){
 		board[botPos[1]][botPos[0]].drop();
+	}
+	
+	/*Checking for winstate conditions, ie robot, source and destination
+	 * all on one board. Note that this implementation is not how I would
+	 * have liked to do it, but time constraints mean we will only be dealing
+	 * with one of each entity.
+	 */
+	public boolean checkForWin(){
+		if(hasSrc(botPos[1], botPos[0]) && hasDst(botPos[1], botPos[0])){
+			System.out.println("WINNNRAR");
+			return true;
+		}
+		return false;
 	}
 }

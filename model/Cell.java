@@ -148,9 +148,13 @@ public class Cell {
 		return false;
 	}
 	
-	/*this method is a side effect of my implementation, essetially it should be 
+	/*this method is a side effect of my implementation, essentially it should be 
 	 * run every time a robot drops something. It checks to see if a source and
 	 * destination are present and then it passes the destination the source*/
+	/*Note that this method isn't used anywhere and probably won't be unless we
+	 * get time to work on our stuff some more before we have to submit. But I've
+	 * got WEB, C and DCNC to do so I doubt that'll happen 
+	 */
 	public void sourceToDest(){
 		if(hasDst()&&hasSrc()){
 			this.dest.addSource(this.source);
