@@ -18,6 +18,7 @@ public class Controller {
 	Setting selected;
 	private String cmdsStr;
 	private Interpreter jim = new Interpreter();
+	private Solver ralph = new Solver();
 	/*controller constructor, note that the entire program is run
 	 * from testMain in the test_main package. 
 	 */
@@ -28,24 +29,6 @@ public class Controller {
 		this.the_view.addboardListener(new boardListener());
 		this.the_view.addButtonListener(new buttonListener());
 	}
-	/* just ignore the testMethod()
-	public void testMethod(){
-		//this method is used for testing random shit.
-		try{
-			the_model.toggleWalkable(3, 5);
-		}
-		catch(Exception e){
-			System.out.println("exception occured");
-		}
-		this.the_view.redrawBoard(the_model.getBoard());
-		try{
-			the_model.toggleWalkable(7, 8);
-		}
-		catch(Exception e){
-			System.out.println("exception occurred");
-		}
-		this.the_view.redrawBoard(the_model.getBoard());
-	}*/
 	
 	/*This implementation of ActionListener is specific to board.
 	 * 100 instances of it are generated when it gets passed to 
@@ -169,6 +152,13 @@ public class Controller {
 				the_model = new Model();
 				the_view.redrawBoard(the_model.getBoard());
 				break;
+			case "Solve": try {
+					executeCommands(jim.interpret(ralph.solve(the_model)));
+				} catch (InvalidCommandException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+						  break;
 			default:
 				System.out.println("How did you do that?");
 				break;

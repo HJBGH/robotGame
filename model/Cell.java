@@ -159,7 +159,7 @@ public class Cell {
 		if(hasDst()&&hasSrc()){
 			this.dest.addSource(this.source);
 		}
-		//placeholder comment, I got too bored to implment this.
+		//placeholder comment, I got too bored to implement this.
 	}
 	public void pickup(){
 		if(hasBot()&&hasSrc()){

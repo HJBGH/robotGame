@@ -12,8 +12,13 @@ public class Model {
 	 * at the targeted cell when a command is given.
 	 */
 	private Cell[][] board = new Cell[10][10];
-	//this does not allow for multiple robots. It will break really badly if more than one are placed on the board.
+	/*this does not allow for multiple robots. It will break really badly if more than
+	 *  one are placed on the board.
+	 */
+	//position tracking variables
 	private int[] botPos;
+	private int[] dstPos;
+	private int[] srcPos;
 	//model constructor
 	public Model(){
 		for(int y=0;y<10;y++){
@@ -27,6 +32,19 @@ public class Model {
 	public Cell[][] getBoard(){
 		return board;
 	}
+	//getters for the position int arrays
+	public int[] getDstPos(){
+		return dstPos;
+	}
+	
+	public int[] getSrcPos(){
+		return srcPos;
+	}
+	public int[] getBotPos(){
+		int[] pos = {botPos[0],botPos[1]};
+		return pos;
+	}
+	
 	
 	//toggle walkable
 	public void toggleWalkable(int x, int y) throws ModelException{
@@ -68,6 +86,7 @@ public class Model {
 		if(!boardHasSrc()){
 			try{
 				board[y][x].place(new_src);
+				srcPos = new int[]{x, y};
 			}
 			catch(CellException cell)
 			{
@@ -84,6 +103,7 @@ public class Model {
 		if(!boardHasDst()){
 			try{
 				board[y][x].place(new_dst);
+				dstPos = new int[] {x, y};
 			}
 			catch(CellException cell)
 			{
@@ -284,5 +304,98 @@ public class Model {
 			return true;
 		}
 		return false;
+	}
+	
+	/* set all the weights to negative one*/
+	public void setWeightsNegOne(){
+		//10 is the width and height of the board, sorry for magic nums
+		for(int i = 0; i<10; i++){
+			for(int n = 0; n<10; n++){
+				board[i][n].weight=-1;
+			}
+		}
+	}
+	/*set all the weights in the cells for getting from that cell to the cell at
+	 * positon x,y
+	 */
+	public void calculateWeights(int x, int y, int count){
+		try{
+			board[y][x].weight = count;
+			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
+			if(board[y-1][x].getWalkable()==true &&
+					(board[y-1][x].weight<0 || count+1<board[y-1][x].weight)){
+				System.out.println("checking north");
+				
+				calculateWeights(x, y-1, count+1);
+			}
+		}
+		catch(Exception e){
+			System.out.println("north OOB");
+			/*if(count != 0)
+			{
+				return;
+			}*/
+			
+		}
+		try{
+			board[y][x].weight = count;
+			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
+			if(board[y][x+1].getWalkable()==true && 
+					(board[y][x+1].weight<0 || count+1<board[y][x+1].weight)){
+				System.out.println("checking east");
+				calculateWeights(x+1, y, count+1);
+			}
+		}
+		catch(Exception e){
+			System.out.println("east OOB");
+			/*if(count != 0)
+			{
+				return;
+			}*/
+			
+		}
+		try{
+			board[y][x].weight = count;
+			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
+			if(board[y+1][x].getWalkable()==true &&
+					(board[y+1][x].weight<0 || count+1<board[y+1][x].weight)){
+				System.out.println("checking south");
+				calculateWeights(x, y+1, count+1);
+			}
+		}
+		catch(Exception e){
+			System.out.println("south OOB");
+		}
+		try{
+			board[y][x].weight = count;
+			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
+			if(board[y][x-1].getWalkable()==true &&
+					(board[y][x-1].weight<0 || count+1<board[y][x-1].weight)){
+				System.out.println("checking west");
+				calculateWeights(x-1, y, count+1);
+			}
+		}
+		catch(Exception e){
+			System.out.println("west OOB");
+			/*if(count != 0)
+			{
+				return;
+			}*/
+			
+		}
+		
+		for(int i = 0; i<10; i++){
+			for(int n = 0; n<10; n++){
+				System.out.printf("%3d, ",board[i][n].weight);
+			}
+			System.out.println();
+		}
+		System.out.println();
+
+	}
+	
+	//set weight function, used for setting source and destination weights in pathfinding
+	public void setInitalWeight(int x, int y){
+		board[y][x].weight=0;
 	}
 }

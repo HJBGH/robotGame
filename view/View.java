@@ -29,6 +29,7 @@ public class View extends JFrame{
 	
 	private JPanel menu = new JPanel();
 	private JButton newGame = new JButton("New Game");
+	private JButton solve = new JButton("Solve");
 	private JLabel pathLabel = new JLabel("Path: ");
 	private JButton path = new JButton("Place Path");
 	private JLabel objectsLabel = new JLabel("Objects: ");
@@ -48,7 +49,7 @@ public class View extends JFrame{
 	private JTextArea commandLine = new JTextArea(2, 20);
 	private JButton commandEnter = new JButton("Enter Commands");
 
-	private JButton[] buttonArray = {newGame, path, robot, source, destination, instructions, commandEnter};
+	private JButton[] buttonArray = {newGame, solve, path, robot, source, destination, instructions, commandEnter};
 	
 	public View()
 	{
@@ -88,6 +89,7 @@ public class View extends JFrame{
 		
 		menu = new JPanel(new FlowLayout());
 		menu.add(newGame);
+		menu.add(solve);
 		menu.add(instructions);
 		menu.add(pathLabel);
 		menu.add(path);
