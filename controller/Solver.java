@@ -19,7 +19,6 @@ public class Solver {
 		int[] botPos = a;
 		int current_Weight = the_board[botPos[1]][botPos[0]].weight;
 		int next_Weight = 999;
-		
 		while(current_Weight!=0){
 			System.out.println(botPos[0] +","+ botPos[1]);
 			
@@ -106,16 +105,17 @@ public class Solver {
 				default: System.out.println("IN DEFAULT");
 						 break;
 			}
+			//If source and destination are placed on the same cell the robot will pick up the source and then stop.
 		}
 		
 		
-		
-		if(the_model.hasDst(botPos[0], botPos[1])){
-			commandString += "drop";
-		}
 		if(the_model.hasSrc(botPos[0], botPos[1])){
 			commandString += "pick,";
+		}		
+		else if(the_model.hasDst(botPos[0], botPos[1])){
+			commandString += "drop,";
 		}
+
 		
 		return commandString;
 		
@@ -126,6 +126,8 @@ public class Solver {
 		int[] srcPos = the_model.getSrcPos();
 		int[] dstPos = the_model.getDstPos();
 		int[] botPos = the_model.getBotPos();
+		Cell[][] the_board = the_model.getBoard();
+		String holdStr = "";
 		System.out.printf("The bot is at %d,%d",botPos[0],botPos[1]);
 		//source bit
 		the_model.setWeightsNegOne();
@@ -133,16 +135,28 @@ public class Solver {
 		 *itself is 0*/
 		the_model.setInitalWeight(srcPos[0], srcPos[1]);
 		the_model.calculateWeights(srcPos[0], srcPos[1], 0);
+		//
+		if (the_board[botPos[1]][botPos[0]].weight == -1)
+		{
+			System.out.println("Cannot find path to Source");
+			return "";
+		}
 		commandOutput = generatePath(the_model, botPos);
 		System.out.println(commandOutput);
 		System.out.println("source check finished");
 		
 		//destination bit
-		
 		the_model.setWeightsNegOne();
 		the_model.setInitalWeight(dstPos[0], dstPos[1]);
 		the_model.calculateWeights(dstPos[0], dstPos[1], 0);
-		commandOutput += generatePath(the_model, botPos);
+		//
+		if (the_board[botPos[1]][botPos[0]].weight == -1)
+		{
+			System.out.println("Cannot find path Destination");
+			return "";
+		}
+		
+		commandOutput += generatePath(the_model, botPos); 
 		return commandOutput;
 	}
 

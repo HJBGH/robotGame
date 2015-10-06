@@ -120,6 +120,7 @@ public class Model {
 	//there really should be a method that picks up the robot to move it.
 	public Robot removeBot(int x, int y) throws ModelException{
 		try{
+			System.out.println("remove bot looked for bot at: "+ x +"," + y);
 			return board[y][x].removeBot();
 		}
 		catch(CellException cell)
@@ -220,14 +221,15 @@ public class Model {
 			temp_bot = removeBot(botPos[0],botPos[1]);
 		} catch (ModelException e2) {
 			e2.printStackTrace();
-			System.out.println("no source to pickup");
+			System.out.println("no bot to pickup");
+			System.out.println("Looked for bot at: "+ botPos[0]+","+botPos[1]);
 			return;
 		}
 		switch(v){
 		case 'N':
 			try {
 				this.place(botPos[0], botPos[1]-1, temp_bot);
-				System.out.println("Moved north");
+				//System.out.println("Moved north");
 			} catch (ModelException e) {
 				// TODO Auto-generated catch block
 				try {
@@ -242,7 +244,7 @@ public class Model {
 		case 'E':
 			try {
 				this.place(botPos[0]+1, botPos[1], temp_bot);
-				System.out.println("Moved east");
+				//System.out.println("Moved east");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -256,7 +258,7 @@ public class Model {
 		case 'S':
 			try {
 				this.place(botPos[0], botPos[1]+1, temp_bot);
-				System.out.println("Moved south");
+				//System.out.println("Moved south");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -270,7 +272,7 @@ public class Model {
 		case 'W':
 			try {
 				this.place(botPos[0]-1, botPos[1], temp_bot);
-				System.out.println("Moved west");
+				//System.out.println("Moved west");
 			} catch (ModelException e) {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
@@ -280,6 +282,9 @@ public class Model {
 				}
 				e.printStackTrace();
 			}
+			break;
+		default:
+			System.out.println("Unrecognized direction");
 			break;
 		}
 	}
@@ -299,7 +304,7 @@ public class Model {
 	 * with one of each entity.
 	 */
 	public boolean checkForWin(){
-		if(hasSrc(botPos[1], botPos[0]) && hasDst(botPos[1], botPos[0])){
+		if(hasSrc(botPos[0], botPos[1]) && hasDst(botPos[0], botPos[1])){
 			System.out.println("WINNNRAR");
 			return true;
 		}

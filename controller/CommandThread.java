@@ -36,7 +36,7 @@ public class CommandThread implements Runnable
 			else
 			{
 				int count = Character.getNumericValue(cmd.charAt(0));
-				char direction = cmd.charAt(1);
+				char direction = Character.toUpperCase(cmd.charAt(1));
 
 				for (int i = 0; i < count; i++)
 				{
@@ -52,10 +52,7 @@ public class CommandThread implements Runnable
 					the_view.redrawBoard(the_model.getBoard());
 				}
 			}
-			if(the_model.checkForWin()){
-				the_view.set_alert("WINRAR IS YOU");
-				return;
-			};
+			
 			
 			try
 			{
@@ -70,6 +67,10 @@ public class CommandThread implements Runnable
 			
 			
 			the_view.redrawBoard(the_model.getBoard());
+			if(the_model.checkForWin()){
+				the_view.set_alert("WINRAR IS YOU");
+				return;
+			};
 		}
 	}
 }
