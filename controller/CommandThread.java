@@ -3,8 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import view.View;
-import model.Model;
-import model.ModelException;
+import model.*;
 
 public class CommandThread implements Runnable
 {
@@ -12,7 +11,6 @@ public class CommandThread implements Runnable
 	private Model the_model;
 	private View the_view;
 
-	
 	public CommandThread(View the_view, Model the_model,
 			ArrayList<String> commands)
 	{
@@ -21,8 +19,6 @@ public class CommandThread implements Runnable
 		this.the_view = the_view;
 	}
 
-	
-	
 	public void run()
 	{
 		for (String cmd : commands)
@@ -30,12 +26,10 @@ public class CommandThread implements Runnable
 			if ((cmd.toUpperCase()).equals("PICK"))
 			{
 				the_model.pickup();
-			} 
-			else if ((cmd.toUpperCase()).equals("DROP"))
+			} else if ((cmd.toUpperCase()).equals("DROP"))
 			{
 				the_model.drop();
-			} 
-			else
+			} else
 			{
 				int count = Character.getNumericValue(cmd.charAt(0));
 				char direction = Character.toUpperCase(cmd.charAt(1));
@@ -47,7 +41,6 @@ public class CommandThread implements Runnable
 					}catch(ModelException ME){
 						the_view.set_alert(ME.getMessage());
 					}
-					
 					try
 					{
 						Thread.sleep(200);
@@ -59,25 +52,26 @@ public class CommandThread implements Runnable
 					the_view.redrawBoard(the_model.getBoard());
 				}
 			}
-			
-			
+
 			try
 			{
 				Thread.sleep(200);
-			} 
-			
+			}
+
 			catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 			the_view.redrawBoard(the_model.getBoard());
-			if(the_model.checkForWin()){
+			if (the_model.checkForWin())
+			{
 				the_view.set_alert("!!!!!!GAME OVER!!!!!!");
+				the_view.disableButtons();
 				return;
-			};
+			}
+			;
 		}
 	}
 }
