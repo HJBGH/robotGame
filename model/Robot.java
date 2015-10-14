@@ -2,7 +2,7 @@ package model;
 
 public class Robot {
 	public boolean source_held = false;
-	Source held_source;
+	private Source held_source;
 	
 	public Robot(){
 		//empty constructor

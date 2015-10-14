@@ -174,4 +174,11 @@ public class Cell {
 			}
 		}
 	}
+	//check if the cells robot is holding a source, this is only used in the view to set the appropriate image
+	public boolean botHasSrc(){
+		if(this.hasBot()){
+			return bot.source_held;
+		}
+		return false;
+	}
 }

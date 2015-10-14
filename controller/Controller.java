@@ -17,8 +17,8 @@ public class Controller {
 	};
 	Setting selected;
 	private String cmdsStr;
-	private Interpreter jim = new Interpreter();
-	private Solver ralph = new Solver();
+	private Interpreter the_interpreter = new Interpreter();
+	private Solver the_solver = new Solver();
 	/*controller constructor, note that the entire program is run
 	 * from testMain in the test_main package. 
 	 */
@@ -33,7 +33,8 @@ public class Controller {
 	/*This implementation of ActionListener is specific to board.
 	 * 100 instances of it are generated when it gets passed to 
 	 * model.addboardListener in the constructor. There may be a 
-	 * better method.
+	 * better method. There is a better method, use one action listener,
+	 *  represent the board with openGL and get co-ordinates from the action listener
 	 * All this does is get the cell Co-ordinates (cheers Ilya) 
 	 * and use the appropriate model method to toggle the walkable
 	 * state of that cell. The board is then redrawn.
@@ -47,9 +48,8 @@ public class Controller {
 				try{
 					the_model.toggleWalkable(clickedCell[0], clickedCell[1]);
 				}
-				catch(Exception ohFuck){
-					System.out.println("shit broke");
-					ohFuck.printStackTrace(System.out);
+				catch(Exception e){
+					e.printStackTrace(System.out);
 				}
 			}
 			if(selected == Setting.BOT){
@@ -57,9 +57,8 @@ public class Controller {
 					try{
 						the_model.place(clickedCell[0], clickedCell[1], new Robot());
 					}
-					catch(Exception ohFuck){
-						System.out.println("shit broke");
-						ohFuck.printStackTrace(System.out);
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 				else{
@@ -67,8 +66,8 @@ public class Controller {
 						System.out.println("removing rerobot");
 						the_model.removeBot(clickedCell[0], clickedCell[1]);
 					}
-					catch(Exception godDamnit){
-						System.out.println("broke");
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 			}
@@ -77,17 +76,16 @@ public class Controller {
 					try{
 						the_model.place(clickedCell[0], clickedCell[1], new Source());
 					}
-					catch(Exception ohFuck){
-						System.out.println("shit broke");
-						ohFuck.printStackTrace(System.out);
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 				else{
 					try{
 						the_model.removeSrc(clickedCell[0], clickedCell[1]);
 					}
-					catch(Exception godDamnit){
-						System.out.println("broke");
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 			}
@@ -96,17 +94,16 @@ public class Controller {
 					try{
 						the_model.place(clickedCell[0], clickedCell[1], new Destination());
 					}
-					catch(Exception ohFuck){
-						System.out.println("shit broke");
-						ohFuck.printStackTrace(System.out);
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 				else{
 					try{
 						the_model.removeDst(clickedCell[0], clickedCell[1]);
 					}
-					catch(Exception godDamnit){
-						System.out.println("broke");
+					catch(Exception e){
+						e.printStackTrace(System.out);
 					}
 				}
 			}
@@ -123,7 +120,7 @@ public class Controller {
 				cmdsStr = the_view.get_command();
 				System.out.println(cmdsStr);
 				try {
-					executeCommands(jim.interpret(cmdsStr));
+					executeCommands(the_interpreter.interpret(cmdsStr));
 				} catch (InvalidCommandException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -153,12 +150,14 @@ public class Controller {
 				the_view.redrawBoard(the_model.getBoard());
 				break;
 			case "Solve": try {
-					executeCommands(jim.interpret(ralph.solve(the_model)));
+					executeCommands(the_interpreter.interpret(the_solver.solve(the_model)));
 				} catch (InvalidCommandException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch(Exception e){
+					the_view.set_alert(e.getMessage());
 				}
-						  break;
+				break;
 			default:
 				System.out.println("How did you do that?");
 				break;

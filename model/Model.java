@@ -36,7 +36,6 @@ public class Model {
 	public int[] getDstPos(){
 		return dstPos;
 	}
-	
 	public int[] getSrcPos(){
 		return srcPos;
 	}
@@ -215,10 +214,13 @@ public class Model {
 	}
 	
 	//methods for moving the robot
-	public void moveRobot(char v){
+	public void moveRobot(char v) throws ModelException{
 		Robot temp_bot;
 		try {
 			temp_bot = removeBot(botPos[0],botPos[1]);
+			if(temp_bot == null){
+				throw new ModelException("NPE occurred in removeBot");	
+			}
 		} catch (ModelException e2) {
 			e2.printStackTrace();
 			System.out.println("no bot to pickup");
@@ -238,7 +240,9 @@ public class Model {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
+				
+				throw new ModelException("No walkable cell North of Robot");
+				//e.printStackTrace();
 			}
 			break;
 		case 'E':
@@ -252,7 +256,7 @@ public class Model {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
+				throw new ModelException("No walkable cell East of Robot");
 			}
 			break;
 		case 'S':
@@ -266,7 +270,7 @@ public class Model {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
+				throw new ModelException("No walkable cell South of Robot");
 			}
 			break;
 		case 'W':
@@ -280,7 +284,7 @@ public class Model {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
+				throw new ModelException("No walkable cell West of Robot");
 			}
 			break;
 		default:
@@ -305,7 +309,6 @@ public class Model {
 	 */
 	public boolean checkForWin(){
 		if(hasSrc(botPos[0], botPos[1]) && hasDst(botPos[0], botPos[1])){
-			System.out.println("WINNNRAR");
 			return true;
 		}
 		return false;
@@ -313,7 +316,7 @@ public class Model {
 	
 	/* set all the weights to negative one*/
 	public void setWeightsNegOne(){
-		//10 is the width and height of the board, sorry for magic nums
+		//10 is the width and height of the board, sorry for magic nums I should probably define an ENUM
 		for(int i = 0; i<10; i++){
 			for(int n = 0; n<10; n++){
 				board[i][n].weight=-1;
@@ -336,11 +339,6 @@ public class Model {
 		}
 		catch(Exception e){
 			System.out.println("north OOB");
-			/*if(count != 0)
-			{
-				return;
-			}*/
-			
 		}
 		try{
 			board[y][x].weight = count;
@@ -353,11 +351,6 @@ public class Model {
 		}
 		catch(Exception e){
 			System.out.println("east OOB");
-			/*if(count != 0)
-			{
-				return;
-			}*/
-			
 		}
 		try{
 			board[y][x].weight = count;
@@ -382,24 +375,11 @@ public class Model {
 		}
 		catch(Exception e){
 			System.out.println("west OOB");
-			/*if(count != 0)
-			{
-				return;
-			}*/
-			
 		}
-		
-		for(int i = 0; i<10; i++){
-			for(int n = 0; n<10; n++){
-				System.out.printf("%3d, ",board[i][n].weight);
-			}
-			System.out.println();
-		}
-		System.out.println();
-
 	}
 	
-	//set weight function, used for setting source and destination weights in pathfinding
+	/*	set weight function, used for setting source and destination weights in pathfinding, 
+		this should probably be done in another function */
 	public void setInitalWeight(int x, int y){
 		board[y][x].weight=0;
 	}

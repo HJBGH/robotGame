@@ -13,15 +13,14 @@ public class Solver {
 	}
 	
 	private String generatePath(Model the_model, int[] a){
-		//Jack,(or Assessors) if you're reading this Sam and I are kinda sorry.
+		//Jack, Ilya (or Assessors), if you're reading this Sam and I are kinda sorry.
 		Cell[][] the_board = the_model.getBoard();
 		String commandString = "";
 		int[] botPos = a;
 		int current_Weight = the_board[botPos[1]][botPos[0]].weight;
-		int next_Weight = 999;
+		int next_Weight = 999;//1337 h4x
 		while(current_Weight!=0){
 			System.out.println(botPos[0] +","+ botPos[1]);
-			
 			current_Weight = the_board[botPos[1]][botPos[0]].weight;
 			System.out.println(current_Weight);
 			
@@ -111,6 +110,9 @@ public class Solver {
 		
 		if(the_model.hasSrc(botPos[0], botPos[1])){
 			commandString += "pick,";
+			if(the_model.hasDst(botPos[0], botPos[1])){
+				commandString += "drop,";
+			}
 		}		
 		else if(the_model.hasDst(botPos[0], botPos[1])){
 			commandString += "drop,";
@@ -121,7 +123,7 @@ public class Solver {
 		
 	}
 	
-	public String solve(Model the_model){
+	public String solve(Model the_model) throws Exception{
 		//get the locations of the pieces.
 		int[] srcPos = the_model.getSrcPos();
 		int[] dstPos = the_model.getDstPos();
@@ -132,17 +134,17 @@ public class Solver {
 		//source bit
 		the_model.setWeightsNegOne();
 		/* initial weight set at zero because there is zero difference between a piece and
-		 *itself is 0*/
+		 *itself*/
 		the_model.setInitalWeight(srcPos[0], srcPos[1]);
 		the_model.calculateWeights(srcPos[0], srcPos[1], 0);
 		//
 		if (the_board[botPos[1]][botPos[0]].weight == -1)
 		{
+			
 			System.out.println("Cannot find path to Source");
-			return "";
+			throw new Exception("Unsolvable scenario.");
 		}
 		commandOutput = generatePath(the_model, botPos);
-		System.out.println(commandOutput);
 		System.out.println("source check finished");
 		
 		//destination bit
@@ -153,10 +155,11 @@ public class Solver {
 		if (the_board[botPos[1]][botPos[0]].weight == -1)
 		{
 			System.out.println("Cannot find path Destination");
-			return "";
+			throw new Exception("Unsolvable scenario.");
 		}
 		
-		commandOutput += generatePath(the_model, botPos); 
+		commandOutput += generatePath(the_model, botPos);
+		System.out.println(commandOutput);
 		return commandOutput;
 	}
 

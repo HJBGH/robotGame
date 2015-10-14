@@ -1,8 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
+
 import view.View;
 import model.Model;
+import model.ModelException;
 
 public class CommandThread implements Runnable
 {
@@ -40,7 +42,12 @@ public class CommandThread implements Runnable
 
 				for (int i = 0; i < count; i++)
 				{
-					the_model.moveRobot(direction);
+					try{
+						the_model.moveRobot(direction);
+					}catch(ModelException ME){
+						the_view.set_alert(ME.getMessage());
+					}
+					
 					try
 					{
 						Thread.sleep(200);
@@ -68,7 +75,7 @@ public class CommandThread implements Runnable
 			
 			the_view.redrawBoard(the_model.getBoard());
 			if(the_model.checkForWin()){
-				the_view.set_alert("WINRAR IS YOU");
+				the_view.set_alert("!!!!!!GAME OVER!!!!!!");
 				return;
 			};
 		}
