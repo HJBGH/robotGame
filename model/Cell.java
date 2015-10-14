@@ -26,15 +26,7 @@ public class Cell {
 	public boolean getWalkable(){
 		return this.walkable;
 	}
-	//the walkable setter
-	public void setWalkable(boolean bool) throws CellException{
-		if(hasBot()==true){
-			throw new CellException("Cannot set walkable while entity present");
-		}
-		this.walkable = bool;
-	}
-	
-	
+	//the walkable setter	
 	/*Placer methods, these methods take instances of the various entity objects as
 	 * arguements and set them to the appropriate variable on the cell. effectively
 	 * "Placing" them on the cell. These methods are actually just one method overloaded.

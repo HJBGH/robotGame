@@ -27,7 +27,7 @@ public class View extends JFrame
 			"resources/bowserHasPeach.png");
 	private ImageIcon bowserAndPeach = new ImageIcon(
 			"resources/bowserPeach.png");
-	private ImageIcon finished = new ImageIcon("resources/finished.png"); 
+	private ImageIcon finished = new ImageIcon("resources/finished.png");
 
 	private JPanel menu = new JPanel();
 	private JButton newGame = new JButton("New Game");
@@ -51,8 +51,8 @@ public class View extends JFrame
 	private JTextArea commandLine = new JTextArea(2, 20);
 	private JButton commandEnter = new JButton("Enter Commands");
 
-	private JButton[] buttonArray = {newGame, instructions, solve, path,
-			robot, source, destination, commandEnter};
+	private JButton[] buttonArray = { newGame, instructions, solve, path,
+			robot, source, destination, commandEnter };
 
 	public View()
 	{
@@ -107,7 +107,7 @@ public class View extends JFrame
 
 		board = new JPanel(new GridLayout(10, 10));
 		gui.add(board, BorderLayout.CENTER);
-		
+
 		commandSection = new JPanel(new BorderLayout(2, 0));
 		commandSection.add(commandLineLabel, BorderLayout.WEST);
 		commandSection.add(commandLine, BorderLayout.CENTER);
@@ -172,10 +172,11 @@ public class View extends JFrame
 
 	public void displayInstructions()
 	{
-		JFrame instFrame = new JFrame("Instructions for Robot Simulation");
-		JTextArea instText = new JTextArea(50, instFrame.getWidth());
+		JFrame instFrame = new JFrame("Instructions for Robot Game");
+		JTextArea instText = new JTextArea(instFrame.getWidth(), 40);
 		JScrollPane instScrollPane = new JScrollPane(instText);
 
+		instScrollPane.getVerticalScrollBar().setValue(0);
 		instFrame.setBounds(0, 0, 400, 400);
 		instFrame.setVisible(true);
 
@@ -191,8 +192,35 @@ public class View extends JFrame
 		instText.append("1. The User can place and remove path pieces; clicking on "
 				+ "board cells to place and clicking again to remove."
 				+ " Path pieces will be coloured white while non-path pieces are grey.\n");
-		instText.append("2. The User can specify the locations of the Robot, Source, and Destination Objects by"
-				+ "clicking on the appropriate button and then clicking on a cell.\n");
+		instText.append("2. The User can specify the locations of the Robot, Source, and Destination Objects by "
+				+ "clicking on the appropriate button and then clicking on a cell.\n\n");
+		instText.append("How to set up the board: \n\n:");
+		instText.append("1. Set up the path: Click the menu option 'Set Path', "
+				+ "then click cells which you would like to be a path for the robot. "
+				+ "Please remember to ensure all 'path' or white cells are connected.\n\n");
+		instText.append("2. Set up the Objects: Click each menu item for Place Robot, Source and Destination, "
+				+ "followed by clicking a white cell on which you would like to place "
+				+ "each object consecutively. \n\n");
+		instText.append("How to plot your own moves:\n\n");
+		instText.append("Once the path, robot, source and destination have been set, "
+				+ "the user can enter commands to move the robot manually.\n\n");
+		instText.append("Directions (NOT case sensative): \n\n");
+		instText.append("Down (South); = 'S'\n");
+		instText.append("Up (North); = 'N'\n");
+		instText.append("Right (East); = 'E'\n");
+		instText.append("Left (West); = 'W'\n\n");
+		instText.append("Moving the robot: \n\n");
+		instText.append("1. Enter the amount of moves you would like the robot to make, "
+				+ "followed by the direction (WITHOUT any spaces), i.e. '4N' will move the robot 4 cells north (up).\n\n");
+		instText.append("2. Provide a space between commands e.g. '4N 2E 3S'"
+				+ "will move the robot 4 cells up, 2 right and 3 down all in one attempt.\n\n");
+		instText.append("3. Press the 'Enter Commands' button to implement your moves on the board.\n\n");
+		instText.append("Perform actions with Robot: \n\n");
+		instText.append("1. Once the user has entered command to move the robot, "
+				+ "entering 'pick' or 'drop' will allow the robot to grab or drop the source \n\n");
+		instText.append("2. 'pick' or 'drop' can be used with direction commands or seperately "
+				+ "e.g. '4S 2E pick 1N 2W drop' is OK \n\n");
+		instText.append("Pressing New Game at anytime will give the user the option to restart the game. ");
 
 		instText.setLineWrap(true);
 		instText.setWrapStyleWord(true);
@@ -200,7 +228,6 @@ public class View extends JFrame
 		instFrame.add(instScrollPane);
 	}
 
-	
 	public void disableButtons()
 	{
 		solve.setEnabled(false);
@@ -211,9 +238,7 @@ public class View extends JFrame
 		commandEnter.setEnabled(false);
 		commandLine.setText("");
 	}
-	
-	
-	
+
 	public void reenableButtons()
 	{
 		solve.setEnabled(true);
@@ -225,9 +250,7 @@ public class View extends JFrame
 		alertBox.setText("");
 		commandLine.setText("");
 	}
-	
-	
-	
+
 	private Image resizeIcons(ImageIcon icon)
 	{
 		Image img = icon.getImage();
@@ -267,14 +290,16 @@ public class View extends JFrame
 							&& boardData[i][j].hasDst())
 					{
 						cell[i][j].setIcon(finished);
-					} else if (boardData[i][j].hasBot()	&& boardData[i][j].hasSrc())
+					} else if (boardData[i][j].hasBot()
+							&& boardData[i][j].hasSrc())
 					{
 						// bowser has peach
 						cell[i][j].setIcon(bowserAndPeach);
 					} else if (boardData[i][j].hasBot())
 					{
 						cell[i][j].setIcon(bowser);
-						if(boardData[i][j].botHasSrc()){
+						if (boardData[i][j].botHasSrc())
+						{
 							cell[i][j].setIcon(bowserHasPeach);
 						}
 
