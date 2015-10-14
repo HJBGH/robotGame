@@ -145,6 +145,7 @@ public class Controller
 			switch (buttonStr)
 			{
 			case "Enter Commands":
+				selected = null;
 				cmdsStr = the_view.get_command();
 				System.out.println(cmdsStr);
 				try
@@ -176,6 +177,7 @@ public class Controller
 				the_view.displayInstructions();
 				break;
 			case "New Game":
+				selected = null;
 				switch (the_view.getNewGameOption())
 				{
 				case 0:
@@ -197,6 +199,7 @@ public class Controller
 				}
 				break;
 			case "Solve": try {
+				selected=null;
 				executeCommands(the_interpreter.interpret(the_solver.solve(the_model)));
 			} catch (InvalidCommandException e) {
 				// TODO Auto-generated catch block

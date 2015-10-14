@@ -124,6 +124,10 @@ public class Solver {
 	}
 	
 	public String solve(Model the_model) throws Exception{
+		
+		if(!((the_model.boardHasBot() && the_model.boardHasDst()) && the_model.boardHasSrc())){
+			throw new Exception("Unsolvable scenario");
+		}
 		//get the locations of the pieces.
 		int[] srcPos = the_model.getSrcPos();
 		int[] dstPos = the_model.getDstPos();
