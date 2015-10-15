@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Destination {
 	/*An array list of sources contained in the destination,
-	 * note that once they're in they can't get out.
+	 * note that once they're in they can't get out. this attribute never gets used
+	 * it was originally intended to be used for multiple source/robot games.
 	 */
 	private ArrayList<Source> source_list = new ArrayList<Source>();
 	
@@ -21,7 +22,5 @@ public class Destination {
 	public ArrayList<Source> getSources(){
 		return source_list;
 	}
-	//this should have an array of sources contained in it.
-	//this class should be able to return the array.
-	//this class should be able to append sources to the array.
+
 }

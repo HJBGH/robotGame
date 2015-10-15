@@ -2,18 +2,26 @@ package model;
 
 
 
-/*Some of the classes in this package may seem un-necessary, but I find them useful
- * for management.
- */
+/*To The Assessors:
+ * 	Some of the classes in the model package have attributes and methods which are not used in the
+ *	program. Examples are the destination's source list and the methods associated with this list,
+ *	and the name String, held boolean and relevant methods in the source class.
+ *	There are other methods and attributes like this in the cell and in the model.
+ *	Originally we planned to attempt to implement multiple robots and sources, these attributes and 
+ *	variables would have helped in that case. However; around about week 10 we realised we were no-where
+ *	close to adding this functionality so the attributes and methods have remained unused.
+ *	They have not been removed, we though it would be better to leave them in incase an
+ *	opportunity to implement multiple robots and sources came up.
+ */   
 public class Model {
 
 	/*the absence of booleans means that I no longer have to worry about tracking
-	 * the boolean for each thingo, I just need to check to see if an entity is present 
+	 * the boolean for each piece, I just need to check to see if an entity is present 
 	 * at the targeted cell when a command is given.
 	 */
 	private Cell[][] board = new Cell[10][10];
 	/*this does not allow for multiple robots. It will break really badly if more than
-	 *  one are placed on the board.
+	 * one are placed on the board.
 	 */
 	//position tracking variables
 	private int[] botPos;
@@ -116,7 +124,6 @@ public class Model {
 	}
 	//the model doesn't need to get walkable
 	//removers for robot, source and destination
-	//there really should be a method that picks up the robot to move it.
 	public Robot removeBot(int x, int y) throws ModelException{
 		try{
 			System.out.println("remove bot looked for bot at: "+ x +"," + y);
@@ -178,7 +185,8 @@ public class Model {
 	//checking the whole board for the items
 	/*the only reason these methods exist is to prevent the user from
 	 * placing multiple items because otherwise out pathfinding doesn't 
-	 * work.
+	 * work. Orignally we had planned to let the user use multiple pieces but we 
+	 * ran out of time.
 	 */
 	public boolean boardHasBot(){
 		for(int i = 0; i<10; i++){
@@ -213,7 +221,7 @@ public class Model {
 		return false;
 	}
 	
-	//methods for moving the robot
+	//methods for moving the robot, where char v is the 'v'ector.
 	public void moveRobot(char v) throws ModelException{
 		Robot temp_bot;
 		try {
@@ -233,11 +241,9 @@ public class Model {
 				this.place(botPos[0], botPos[1]-1, temp_bot);
 				//System.out.println("Moved north");
 			} catch (ModelException e) {
-				// TODO Auto-generated catch block
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
 				} catch (ModelException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -253,7 +259,6 @@ public class Model {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
 				} catch (ModelException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				throw new ModelException("No walkable cell East of Robot");
@@ -267,7 +272,6 @@ public class Model {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
 				} catch (ModelException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				throw new ModelException("No walkable cell South of Robot");
@@ -281,7 +285,6 @@ public class Model {
 				try {
 					this.place(botPos[0], botPos[1], temp_bot);
 				} catch (ModelException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				throw new ModelException("No walkable cell West of Robot");
@@ -303,9 +306,12 @@ public class Model {
 	}
 	
 	/*Checking for winstate conditions, ie robot, source and destination
-	 * all on one board. Note that this implementation is not how I would
+	 * all on one cell. Note that this implementation is not how I would
 	 * have liked to do it, but time constraints mean we will only be dealing
-	 * with one of each entity.
+	 * with one of each entity. Ideally what would have happened is that the 
+	 * source would have been added to the destinations source list. Then; 
+	 * once there were no more sources on the board the source list would 
+	 * be checked to make sure all the sources were there. If so; win.
 	 */
 	public boolean checkForWin(){
 		if(hasSrc(botPos[0], botPos[1]) && hasDst(botPos[0], botPos[1])){
@@ -316,7 +322,7 @@ public class Model {
 	
 	/* set all the weights to negative one*/
 	public void setWeightsNegOne(){
-		//10 is the width and height of the board, sorry for magic nums I should probably define an ENUM
+		//10 is the width and height of the board
 		for(int i = 0; i<10; i++){
 			for(int n = 0; n<10; n++){
 				board[i][n].weight=-1;
@@ -324,12 +330,11 @@ public class Model {
 		}
 	}
 	/*set all the weights in the cells for getting from that cell to the cell at
-	 * positon x,y
+	 * position x,y
 	 */
 	public void calculateWeights(int x, int y, int count){
 		try{
 			board[y][x].weight = count;
-			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
 			if(board[y-1][x].getWalkable()==true &&
 					(board[y-1][x].weight<0 || count+1<board[y-1][x].weight)){
 				System.out.println("checking north");
@@ -342,7 +347,6 @@ public class Model {
 		}
 		try{
 			board[y][x].weight = count;
-			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
 			if(board[y][x+1].getWalkable()==true && 
 					(board[y][x+1].weight<0 || count+1<board[y][x+1].weight)){
 				System.out.println("checking east");
@@ -354,7 +358,6 @@ public class Model {
 		}
 		try{
 			board[y][x].weight = count;
-			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
 			if(board[y+1][x].getWalkable()==true &&
 					(board[y+1][x].weight<0 || count+1<board[y+1][x].weight)){
 				System.out.println("checking south");
@@ -366,7 +369,6 @@ public class Model {
 		}
 		try{
 			board[y][x].weight = count;
-			//System.out.println("weight at cell "+ x+ "," + y+":" + board[y][x].weight);
 			if(board[y][x-1].getWalkable()==true &&
 					(board[y][x-1].weight<0 || count+1<board[y][x-1].weight)){
 				System.out.println("checking west");
@@ -378,8 +380,7 @@ public class Model {
 		}
 	}
 	
-	/*	set weight function, used for setting source and destination weights in pathfinding, 
-		this should probably be done in another function */
+	/*	set initial weight function, used for setting source and destination weights in pathfinding*/
 	public void setInitalWeight(int x, int y){
 		board[y][x].weight=0;
 	}

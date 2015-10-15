@@ -8,9 +8,9 @@ public class Source {
 		this.name = name;
 	}
 	public Source(){
-		//overloaded empty constructor
+		
 	}
-	
+	//these are essentially setters and getters with more meaningful names
 	public void picked(){
 		held = true;
 	}

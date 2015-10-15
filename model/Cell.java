@@ -23,6 +23,7 @@ public class Cell {
 		}
 	}
 	//the walkable getter
+	
 	public boolean getWalkable(){
 		return this.walkable;
 	}
@@ -151,8 +152,10 @@ public class Cell {
 		if(hasDst()&&hasSrc()){
 			this.dest.addSource(this.source);
 		}
-		//placeholder comment, I got too bored to implement this.
+		/*	this was never implemented, it would have been if we had implemented multiple
+			robots and sources*/
 	}
+	//telling the robot to pickup and drop the source respectively, not used outside of model
 	public void pickup(){
 		if(hasBot()&&hasSrc()){
 			this.bot.holdSource(this.source);

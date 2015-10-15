@@ -5,7 +5,7 @@ public class Robot {
 	private Source held_source;
 	
 	public Robot(){
-		//empty constructor
+
 	}
 
 	//tell the robot to hold a source

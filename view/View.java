@@ -44,11 +44,11 @@ public class View extends JFrame
 
 	private JPanel alertSection = new JPanel();
 	private JLabel alertLabel = new JLabel("Command Status: ");
-	private JTextArea alertBox = new JTextArea(2, 20);
+	private JTextField alertBox = new JTextField();
 
 	private JPanel commandSection = new JPanel();
 	private JLabel commandLineLabel = new JLabel("Enter commands here: ");
-	private JTextArea commandLine = new JTextArea(2, 20);
+	private JTextField commandLine = new JTextField();
 	private JButton commandEnter = new JButton("Enter Commands");
 
 	private JButton[] buttonArray = { newGame, instructions, solve, path,
@@ -112,7 +112,6 @@ public class View extends JFrame
 		commandSection.add(commandLineLabel, BorderLayout.WEST);
 		commandSection.add(commandLine, BorderLayout.CENTER);
 		commandSection.add(commandEnter, BorderLayout.EAST);
-		commandLine.setLineWrap(true);
 		commandLine.setText("");
 
 		alertSection = new JPanel(new BorderLayout(2, 0));
@@ -139,7 +138,7 @@ public class View extends JFrame
 			{
 				cell[i][j] = new JButton();
 				board.add(cell[i][j]);
-				cell[i][j].setSize(64, 64);
+				cell[i][j].setSize(64, 64); //useless as layout rules has priority
 				Insets buttonMargin = new Insets(0, 0, 0, 0);
 				cell[i][j].setMargin(buttonMargin);
 				cell[i][j].setBackground(Color.darkGray);
@@ -175,59 +174,116 @@ public class View extends JFrame
 		JFrame instFrame = new JFrame("Instructions for Robot Game");
 		JTextArea instText = new JTextArea(instFrame.getWidth(), 40);
 		JScrollPane instScrollPane = new JScrollPane(instText);
-
-		instScrollPane.getVerticalScrollBar().setValue(0);
+		
 		instFrame.setBounds(0, 0, 400, 400);
+		instText.setMargin(new Insets(10,10,10,10));
 		instFrame.setVisible(true);
 
 		instScrollPane.setBackground(Color.white);
-
-		instText.setEditable(false);
-		instText.append("Hello and welcome to Robot Simulation by Team Ytterbium!\n\n");
-		// TODO write instructions:
-		instText.append("Aim:\n");
-		instText.append("The aim of Robot Simulation is to simulate a Robot moving a "
-				+ "Source to a Destination along a user-specified path.\n\n");
-		instText.append("Basic Features:\n");
-		instText.append("1. The User can place and remove path pieces; clicking on "
-				+ "board cells to place and clicking again to remove."
-				+ " Path pieces will be coloured white while non-path pieces are grey.\n");
-		instText.append("2. The User can specify the locations of the Robot, Source, and Destination Objects by "
-				+ "clicking on the appropriate button and then clicking on a cell.\n\n");
-		instText.append("How to set up the board: \n\n:");
-		instText.append("1. Set up the path: Click the menu option 'Set Path', "
-				+ "then click cells which you would like to be a path for the robot. "
-				+ "Please remember to ensure all 'path' or white cells are connected.\n\n");
-		instText.append("2. Set up the Objects: Click each menu item for Place Robot, Source and Destination, "
-				+ "followed by clicking a white cell on which you would like to place "
-				+ "each object consecutively. \n\n");
-		instText.append("How to plot your own moves:\n\n");
-		instText.append("Once the path, robot, source and destination have been set, "
-				+ "the user can enter commands to move the robot manually.\n\n");
-		instText.append("Directions (NOT case sensative): \n\n");
-		instText.append("Down (South); = 'S'\n");
-		instText.append("Up (North); = 'N'\n");
-		instText.append("Right (East); = 'E'\n");
-		instText.append("Left (West); = 'W'\n\n");
-		instText.append("Moving the robot: \n\n");
-		instText.append("1. Enter the amount of moves you would like the robot to make, "
-				+ "followed by the direction (WITHOUT any spaces), i.e. '4N' will move the robot 4 cells north (up).\n\n");
-		instText.append("2. Provide a space between commands e.g. '4N 2E 3S'"
-				+ "will move the robot 4 cells up, 2 right and 3 down all in one attempt.\n\n");
-		instText.append("3. Press the 'Enter Commands' button to implement your moves on the board.\n\n");
-		instText.append("Perform actions with Robot: \n\n");
-		instText.append("1. Once the user has entered command to move the robot, "
-				+ "entering 'pick' or 'drop' will allow the robot to grab or drop the source \n\n");
-		instText.append("2. 'pick' or 'drop' can be used with direction commands or seperately "
-				+ "e.g. '4S 2E pick 1N 2W drop' is OK \n\n");
-		instText.append("Pressing New Game at anytime will give the user the option to restart the game. ");
-
+		instScrollPane.getVerticalScrollBar().setValue(0);
+		
 		instText.setLineWrap(true);
 		instText.setWrapStyleWord(true);
-
+		instText.setEditable(false);
+		
+		instText.append("Hello and welcome to Robot Game by Team Ytterbium!\n\n");
+		// TODO write instructions:
+		instText.append("Aim:\n");
+		instText.append("The aim of Robot Game is to simulate a Robot moving a "
+				+ "Source to a Destination along a user-specified path.\n\n\n");
+		instText.append("Basic Features:\n");
+		instText.append("1. You can place and remove path pieces; clicking on "
+				+ "board cells to place and clicking again to remove."
+				+ " Path pieces will be coloured white while non-path pieces are grey.\n\n");
+		instText.append("2. You can specify the locations of the Robot, Source, and Destination objects by "
+				+ "clicking on the appropriate button and then clicking on a cell.\n\n\n");
+		instText.append("Setting Up The Board:\n");
+		instText.append("1. Set up the path: Click the menu option 'Place Path', "
+				+ "then click any amount of cells to create a path for the Robot. "
+				+ "Please remember to ensure all path pieces (white cells) are connected.\n\n");
+		instText.append("2. Set up the objects: Click the corresponding menu option to place the Robot, Source or Destination, "
+				+ "followed by clicking a white cell on which you would like to place "
+				+ "that object. Do this until one of each object is on the board.\n\n\n");
+		instText.append("Plotting Your Moves:\n");
+		instText.append("Once the path, Robot, Source and Destination have all been set, "
+				+ "you can either; manually enter commands to dictate the Robot's movement or click the 'Solve' button to move the Robot "
+				+ "via the shortest path possible.\n\n");
+		instText.append("Directions:\n");
+		instText.append("Up (North); = 'N' / 'n'\n");
+		instText.append("Right (East); = 'E' / 'e'\n");
+		instText.append("Down (South); = 'S' / 's'\n");
+		instText.append("Left (West); = 'W' / 'w'\n\n\n");
+		instText.append("Moving The Robot Manually Via Commands: \n");
+		instText.append("1. Enter the number of moves you would like the robot to make, "
+				+ "followed by the direction (WITHOUT ANY SPACES), i.e. '4N' will move the Robot 4 cells north (up).\n\n");
+		instText.append("2. Provide a space between each command, e.g. '4N 2E 3S'"
+				+ " will move the robot 4 cells north, 2 east and 3 south all in one attempt.\n\n");
+		instText.append("3. Press the 'Enter Commands' button to run your commands.\n\n\n");
+		instText.append("Performing Actions With The Robot: \n");
+		instText.append("1. Once the user has entered a command to move the Robot, "
+				+ "entering commands; 'pick' or 'drop' will allow the Robot to grab or drop the source respectively.\n\n");
+		instText.append("2. Commands 'pick' or 'drop' can be used separately or with movement commands, "
+				+ "e.g. '4S 2E pick 1N 2W drop'\n\n\n");
+		instText.append("To Note:\n");
+		instText.append("Pressing the 'New Game' menu option at anytime will give you the option to restart the game. \n\n");
+		instText.append("Good luck and have fun!\n\n");
+		instText.append("- Dev Team @ Team Ytterbium :)");
+		
+		
 		instFrame.add(instScrollPane);
 	}
-
+	
+		
+		// flash the newGame button's background 
+		private void flashJButtonColor(JButton button, Color color)
+		{
+			Color origColor = newGame.getBackground();
+			button.setBackground(color);
+			pause(1000);
+			button.setBackground(origColor);
+			pause(1000);
+			button.setBackground(color);
+			pause(1000);
+			
+			button.setBackground(origColor);
+		}
+		
+		// flash the alertBox TextField's background - WINRAR MODE!
+		private void flashJTextFieldColor(JTextField textfield)
+		{
+			Color origColor = alertBox.getBackground();
+			textfield.setBackground(Color.red);
+			pause(100);
+			textfield.setBackground(Color.green);
+			pause(100);
+			textfield.setBackground(Color.blue);
+			pause(100);
+			textfield.setBackground(Color.yellow);
+			pause(100);
+			textfield.setBackground(Color.red);
+			pause(100);
+			textfield.setBackground(Color.green);
+			pause(100);
+			textfield.setBackground(Color.blue);
+			pause(100);
+			textfield.setBackground(Color.yellow);
+			pause(100);
+			
+			textfield.setBackground(origColor);
+		}
+		
+		private void pause(int time) 
+		{
+			try 
+			{
+				Thread.sleep(time);
+			} catch (InterruptedException ie) 
+			{
+				// do nothing
+			}
+		}
+	
+	
 	public void disableButtons()
 	{
 		solve.setEnabled(false);
@@ -237,6 +293,10 @@ public class View extends JFrame
 		destination.setEnabled(false);
 		commandEnter.setEnabled(false);
 		commandLine.setText("");
+		commandLine.setEditable(false);
+		flashJTextFieldColor(alertBox);
+		pause(1000);
+		flashJButtonColor(newGame, Color.LIGHT_GRAY);
 	}
 
 	public void reenableButtons()
