@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-/*this version of view is a slightly modified ripoff of Jack's view code.
+/*this version of view is a slightly modified version of Jack's view code.
  * a number of changes have been made though:
  * 		The view now extends JFrame instead of possessing one
  * 		Ilya's cell finding ideas have been worked into methods here
