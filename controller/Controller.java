@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import view.*;
 import model.*;
-import Interpreter.*;
 
 public class Controller
 {
@@ -161,16 +160,16 @@ public class Controller
 				// TODO: implement interpreter action and appropriate movement
 				// methods here.
 				break;
-			case "Place Robot":
+			case "Robot":
 				selected = Setting.BOT;
 				break;
-			case "Place Source":
+			case "Source":
 				selected = Setting.SOURCE;
 				break;
-			case "Place Destination":
+			case "Destination":
 				selected = Setting.DEST;
 				break;
-			case "Place Path":
+			case "Path":
 				selected = Setting.PATH;
 				break;
 			case "Instructions":

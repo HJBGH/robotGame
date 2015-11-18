@@ -34,11 +34,11 @@ public class View extends JFrame
 	private JButton instructions = new JButton("Instructions");
 	private JButton solve = new JButton("Solve");
 	private JLabel pathLabel = new JLabel("Path: ");
-	private JButton path = new JButton("Place Path");
+	private JButton path = new JButton("Path");
 	private JLabel objectsLabel = new JLabel("Objects: ");
-	private JButton robot = new JButton("Place Robot");
-	private JButton source = new JButton("Place Source");
-	private JButton destination = new JButton("Place Destination");
+	private JButton robot = new JButton("Robot");
+	private JButton source = new JButton("Source");
+	private JButton destination = new JButton("Destination");
 
 	private JPanel inputPanel = new JPanel();
 
