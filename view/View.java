@@ -65,11 +65,6 @@ public class View extends JFrame
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
 		this.setBounds(0, 0, 900, 900);
-		/*
-		 * this.setVisible(true); setting visible in the constructor was causing
-		 * weird problems where the window would appear twice but any changes
-		 * made to the data would only appear once.
-		 */
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Robot Game by Team Ytterbium");
 		this.add(gui);
@@ -138,7 +133,6 @@ public class View extends JFrame
 			{
 				cell[i][j] = new JButton();
 				board.add(cell[i][j]);
-				cell[i][j].setSize(64, 64); //useless as layout rules has priority
 				Insets buttonMargin = new Insets(0, 0, 0, 0);
 				cell[i][j].setMargin(buttonMargin);
 				cell[i][j].setBackground(Color.darkGray);
@@ -171,66 +165,7 @@ public class View extends JFrame
 
 	public void displayInstructions()
 	{
-		JFrame instFrame = new JFrame("Instructions for Robot Game");
-		JTextArea instText = new JTextArea(instFrame.getWidth(), 40);
-		JScrollPane instScrollPane = new JScrollPane(instText);
-		
-		instFrame.setBounds(0, 0, 400, 400);
-		instText.setMargin(new Insets(10,10,10,10));
-		instFrame.setVisible(true);
-
-		instScrollPane.setBackground(Color.white);
-		instScrollPane.getVerticalScrollBar().setValue(0);
-		
-		instText.setLineWrap(true);
-		instText.setWrapStyleWord(true);
-		instText.setEditable(false);
-		
-		instText.append("Hello and welcome to Robot Game by Team Ytterbium!\n\n");
-		// TODO write instructions:
-		instText.append("Aim:\n");
-		instText.append("The aim of Robot Game is to simulate a Robot moving a "
-				+ "Source to a Destination along a user-specified path.\n\n\n");
-		instText.append("Basic Features:\n");
-		instText.append("1. You can place and remove path pieces; clicking on "
-				+ "board cells to place and clicking again to remove."
-				+ " Path pieces will be coloured white while non-path pieces are grey.\n\n");
-		instText.append("2. You can specify the locations of the Robot, Source, and Destination objects by "
-				+ "clicking on the appropriate button and then clicking on a cell.\n\n\n");
-		instText.append("Setting Up The Board:\n");
-		instText.append("1. Set up the path: Click the menu option 'Place Path', "
-				+ "then click any amount of cells to create a path for the Robot. "
-				+ "Please remember to ensure all path pieces (white cells) are connected.\n\n");
-		instText.append("2. Set up the objects: Click the corresponding menu option to place the Robot, Source or Destination, "
-				+ "followed by clicking a white cell on which you would like to place "
-				+ "that object. Do this until one of each object is on the board.\n\n\n");
-		instText.append("Plotting Your Moves:\n");
-		instText.append("Once the path, Robot, Source and Destination have all been set, "
-				+ "you can either; manually enter commands to dictate the Robot's movement or click the 'Solve' button to move the Robot "
-				+ "via the shortest path possible.\n\n");
-		instText.append("Directions:\n");
-		instText.append("Up (North); = 'N' / 'n'\n");
-		instText.append("Right (East); = 'E' / 'e'\n");
-		instText.append("Down (South); = 'S' / 's'\n");
-		instText.append("Left (West); = 'W' / 'w'\n\n\n");
-		instText.append("Moving The Robot Manually Via Commands: \n");
-		instText.append("1. Enter the number of moves you would like the robot to make, "
-				+ "followed by the direction (WITHOUT ANY SPACES), i.e. '4N' will move the Robot 4 cells north (up).\n\n");
-		instText.append("2. Provide a space between each command, e.g. '4N 2E 3S'"
-				+ " will move the robot 4 cells north, 2 east and 3 south all in one attempt.\n\n");
-		instText.append("3. Press the 'Enter Commands' button to run your commands.\n\n\n");
-		instText.append("Performing Actions With The Robot: \n");
-		instText.append("1. Once the user has entered a command to move the Robot, "
-				+ "entering commands; 'pick' or 'drop' will allow the Robot to grab or drop the source respectively.\n\n");
-		instText.append("2. Commands 'pick' or 'drop' can be used separately or with movement commands, "
-				+ "e.g. '4S 2E pick 1N 2W drop'\n\n\n");
-		instText.append("To Note:\n");
-		instText.append("Pressing the 'New Game' menu option at anytime will give you the option to restart the game. \n\n");
-		instText.append("Good luck and have fun!\n\n");
-		instText.append("- Dev Team @ Team Ytterbium :)");
-		
-		
-		instFrame.add(instScrollPane);
+		//TODO; write instructions frame
 	}
 	
 		
