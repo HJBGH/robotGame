@@ -1,9 +1,9 @@
-package controller;
+package robotGame.controller;
 
 import java.util.ArrayList;
 
-import view.View;
-import model.*;
+import robotGame.view.View;
+import robotGame.model.*;
 
 public class Solver {
 	private String commandOutput;

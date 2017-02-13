@@ -1,4 +1,4 @@
-package model;
+package robotGame.model;
 
 public class Cell {
 	private boolean walkable = false; //all cells are unwalkable to start with.

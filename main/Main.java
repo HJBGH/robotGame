@@ -1,13 +1,13 @@
-package main;
+package robotGame.main;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.omg.PortableServer.THREAD_POLICY_ID;
 
-import view.*;
-import model.*;
-import controller.*;
+import robotGame.view.View;
+import robotGame.model.*;
+import robotGame.controller.*;
 //TODO: 
 
 public class Main {

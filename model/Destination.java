@@ -1,4 +1,4 @@
-package model;
+package robotGame.model;
 
 import java.util.ArrayList;
 

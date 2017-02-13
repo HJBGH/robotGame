@@ -1,4 +1,4 @@
-package model;
+package robotGame.model;
 
 public class Robot {
 	public boolean source_held = false;

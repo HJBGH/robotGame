@@ -1,7 +1,7 @@
-package view;
+package robotGame.view;
 
-import model.*;
-import model.Robot;
+import robotGame.model.*;
+import robotGame.model.Robot;
 
 import java.awt.*;
 import java.awt.event.*;

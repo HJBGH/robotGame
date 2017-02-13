@@ -1,4 +1,4 @@
-package model;
+package robotGame.model;
 
 public class Source {
 	boolean held= false; //sources do not start off held.

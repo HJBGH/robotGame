@@ -1,9 +1,10 @@
-package controller;
+package robotGame.controller;
 
 import java.util.ArrayList;
 
-import view.View;
-import model.*;
+import robotGame.view.View;
+import robotGame.model.*;
+import robotGame.model.Model;
 
 public class CommandThread implements Runnable
 {

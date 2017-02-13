@@ -1,10 +1,11 @@
-package controller;
+package robotGame.controller;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import view.*;
-import model.*;
+import robotGame.model.*;
+import robotGame.model.Model;
+import robotGame.view.View;
 
 public class Controller
 {

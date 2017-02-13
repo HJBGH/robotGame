@@ -1,4 +1,4 @@
-package model;
+package robotGame.model;
 
 public class CellException extends Exception{
 	
