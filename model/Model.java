@@ -2,7 +2,7 @@ package robotGame.model;
 
 
 
-/*To The Assessors:
+/** 
  * 	Some of the classes in the model package have attributes and methods which are not used in the
  *	program. Examples are the destination's source list and the methods associated with this list,
  *	and the name String, held boolean and relevant methods in the source class.
@@ -38,7 +38,7 @@ public class Model {
 	
 	//board returner
 	public Cell[][] getBoard(){
-		return board;
+		return board; //<-- !! privacy leak
 	}
 	//getters for the position int arrays
 	public int[] getDstPos(){
@@ -57,7 +57,7 @@ public class Model {
 	public void toggleWalkable(int x, int y) throws ModelException{
 		try{
 			board[y][x].toggleWalkable();
-			System.out.println("Cell at "+x+","+y+" walkable state toggled");
+			System.out.println("Cell at "+x+","+y+" walkable state toggled"); //needs logging calls
 		}
 		catch(CellException CellE){
 			throw new ModelException("Cell cannot be toggled, object present");
