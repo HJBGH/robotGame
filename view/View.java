@@ -256,7 +256,7 @@ public class View extends JFrame
 
 	/*
 	 * board drawing method, all this does is redraw the board using a copy of
-	 * the board. Mostly called inside event handlers in controller to update
+	 * the board model. Mostly called inside event handlers in controller to update
 	 * the view when the model data changes.
 	 */
 	public void redrawBoard(Cell[][] boardData)
@@ -347,6 +347,7 @@ public class View extends JFrame
 	// getting the clicked cell
 	public int[] getClickedCell(ActionEvent clickEvent)
 	{
+		//TODO; Fix this fucking ham fisted attempt at event handling. jesus christ this is awful
 		for (int y = 0; y < 10; y++)
 		{
 			for (int x = 0; x < 10; x++)
