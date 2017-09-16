@@ -20,15 +20,6 @@ public class View extends JFrame
 	private JPanel board = new JPanel();
 	private JButton cell[][] = new JButton[10][10];
 
-	private ImageIcon bowser = new ImageIcon("resources/bowser.png");
-	private ImageIcon peach = new ImageIcon("resources/peach.png");
-	private ImageIcon castle = new ImageIcon("resources/castle.png");
-	private ImageIcon bowserHasPeach = new ImageIcon(
-			"resources/bowserHasPeach.png");
-	private ImageIcon bowserAndPeach = new ImageIcon(
-			"resources/bowserPeach.png");
-	private ImageIcon finished = new ImageIcon("resources/finished.png");
-
 	private JPanel menu = new JPanel();
 	private JButton newGame = new JButton("New Game");
 	private JButton instructions = new JButton("Instructions");
@@ -53,6 +44,9 @@ public class View extends JFrame
 
 	private JButton[] buttonArray = { newGame, instructions, solve, path,
 			robot, source, destination, commandEnter };
+	
+	//at the end of the day the Board class functions as the actual view.
+	private Board testBoard;
 
 	public View()
 	{
@@ -66,28 +60,11 @@ public class View extends JFrame
 		// first
 		this.setBounds(0, 0, 900, 900);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Robot Game by Team Ytterbium");
+		this.setTitle("Robot Game");
 		this.add(gui);
 
 		/* Resizing Icons for board */
-		Image newImg = resizeIcons(bowser);
-		bowser = new ImageIcon(newImg);
-
-		newImg = resizeIcons(peach);
-		peach = new ImageIcon(newImg);
-
-		newImg = resizeIcons(castle);
-		castle = new ImageIcon(newImg);
-
-		newImg = resizeIcons(bowserHasPeach);
-		bowserHasPeach = new ImageIcon(newImg);
-
-		newImg = resizeIcons(bowserAndPeach);
-		bowserAndPeach = new ImageIcon(newImg);
-
-		newImg = resizeIcons(finished);
-		finished = new ImageIcon(newImg);
-
+		
 		menu = new JPanel(new FlowLayout());
 		menu.add(newGame);
 		menu.add(instructions);
@@ -101,7 +78,9 @@ public class View extends JFrame
 		gui.add(menu, BorderLayout.NORTH);
 
 		board = new JPanel(new GridLayout(10, 10));
-		gui.add(board, BorderLayout.CENTER);
+		testBoard = new Board(900, 900, 10);
+		//gui.add(board, BorderLayout.CENTER);
+		gui.add(testBoard);
 
 		commandSection = new JPanel(new BorderLayout(2, 0));
 		commandSection.add(commandLineLabel, BorderLayout.WEST);
@@ -170,53 +149,26 @@ public class View extends JFrame
 	
 		
 		// flash the newGame button's background 
-		private void flashJButtonColor(JButton button, Color color)
-		{
-			Color origColor = newGame.getBackground();
-			button.setBackground(color);
-			pause(1000);
-			button.setBackground(origColor);
-			pause(1000);
-			button.setBackground(color);
-			pause(1000);
-			
-			button.setBackground(origColor);
-		}
+	private void flashJButtonColor(JButton button, Color color)
+	{
+	
+	}
 		
-		// flash the alertBox TextField's background - WINRAR MODE!
-		private void flashJTextFieldColor(JTextField textfield)
-		{
-			Color origColor = alertBox.getBackground();
-			textfield.setBackground(Color.red);
-			pause(100);
-			textfield.setBackground(Color.green);
-			pause(100);
-			textfield.setBackground(Color.blue);
-			pause(100);
-			textfield.setBackground(Color.yellow);
-			pause(100);
-			textfield.setBackground(Color.red);
-			pause(100);
-			textfield.setBackground(Color.green);
-			pause(100);
-			textfield.setBackground(Color.blue);
-			pause(100);
-			textfield.setBackground(Color.yellow);
-			pause(100);
-			
-			textfield.setBackground(origColor);
-		}
+	// flash the alertBox TextField's background - WINRAR MODE!
+	private void flashJTextFieldColor(JTextField textfield)
+	{
+	}
 		
-		private void pause(int time) 
+	private void pause(int time) 
+	{
+		try 
 		{
-			try 
-			{
-				Thread.sleep(time);
-			} catch (InterruptedException ie) 
-			{
-				// do nothing
-			}
+			Thread.sleep(time);
+		} catch (InterruptedException ie) 
+		{
+			// do nothing
 		}
+	}
 	
 	
 	public void disableButtons()
@@ -275,35 +227,30 @@ public class View extends JFrame
 					// cell[i][j].repaint();
 				} else
 				{
-					// System.out.println("You're in the else");
-
-					/*
-					 * The following code sets the
-					 */
 					cell[i][j].setBackground(Color.white);
 					if (boardData[i][j].hasBot() && boardData[i][j].hasSrc()
 							&& boardData[i][j].hasDst())
 					{
-						cell[i][j].setIcon(finished);
+						cell[i][j].setBackground(Color.BLUE);
 					} else if (boardData[i][j].hasBot()
 							&& boardData[i][j].hasSrc())
 					{
 						// bowser has peach
-						cell[i][j].setIcon(bowserAndPeach);
+						//cell[i][j].setIcon(bowserAndPeach);
 					} else if (boardData[i][j].hasBot())
 					{
-						cell[i][j].setIcon(bowser);
+						cell[i][j].setBackground(Color.CYAN);
 						if (boardData[i][j].botHasSrc())
 						{
-							cell[i][j].setIcon(bowserHasPeach);
+							cell[i][j].setBackground(Color.MAGENTA);
 						}
 
 					} else if (boardData[i][j].hasSrc())
 					{
-						cell[i][j].setIcon(peach);
+						cell[i][j].setBackground(Color.GREEN);
 					} else if (boardData[i][j].hasDst())
 					{
-						cell[i][j].setIcon(castle);
+						cell[i][j].setBackground(Color.ORANGE);
 					}
 
 				}
@@ -335,6 +282,10 @@ public class View extends JFrame
 		}
 	}
 
+	public void addGboardListener(MouseListener ml)
+	{
+		this.testBoard.addMouseListener(ml);
+	}
 	// adding listeners for the regular buttons.
 	public void addButtonListener(ActionListener general_ear)
 	{
@@ -347,7 +298,7 @@ public class View extends JFrame
 	// getting the clicked cell
 	public int[] getClickedCell(ActionEvent clickEvent)
 	{
-		//TODO; Fix this fucking ham fisted attempt at event handling. jesus christ this is awful
+		//TODO; Fix this ham fisted attempt at event handling. jesus christ this is awful
 		for (int y = 0; y < 10; y++)
 		{
 			for (int x = 0; x < 10; x++)
@@ -376,5 +327,25 @@ public class View extends JFrame
 		}
 		return ("Unknown button clicked.");
 	}
-
+	
+	private class Board extends JPanel
+	{
+		//todo
+		private int x;
+		private int y;
+		private int cells;
+		
+		public Board(int x, int y, int cells)//x, y dimensions for board size and number of cells per column and row.
+		{
+			this.x = x;
+			this.y = y;
+			this.cells = cells;
+		}
+		
+		public void paint(Graphics g)
+		{
+			g.setColor(Color.GRAY);
+			g.fillRect(0,0,this.x, this.y);
+		}
+	}
 }
