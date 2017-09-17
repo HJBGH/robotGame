@@ -13,7 +13,7 @@ package robotGame.model;
  *	They have not been removed, we though it would be better to leave them in incase an
  *	opportunity to implement multiple robots and sources came up.
  */   
-public class Model {
+public class Model implements ModelInterface{
 
 	/*the absence of booleans means that I no longer have to worry about tracking
 	 * the boolean for each piece, I just need to check to see if an entity is present 
@@ -383,5 +383,53 @@ public class Model {
 	/*	set initial weight function, used for setting source and destination weights in pathfinding*/
 	public void setInitalWeight(int x, int y){
 		board[y][x].weight=0;
+	}
+
+	@Override
+	public void addNode(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeNode(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addHero(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeHero(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEndNode(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeEndNode(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addPrize(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removePrize(int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 }
