@@ -37,6 +37,6 @@ public class Node implements NodeInterface{
 	@Override
 	public ArrayList<Node> getNeighbours() 
 	{
-		return this.neighbours;
+		return (ArrayList<Node>)this.neighbours.clone();
 	}
 }

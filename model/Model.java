@@ -1,6 +1,8 @@
 package robotGame.model;
 
+import java.util.ArrayList;
 
+import robotGame.model.node.*;
 
 /** 
  * 	Some of the classes in the model package have attributes and methods which are not used in the
@@ -15,10 +17,7 @@ package robotGame.model;
  */   
 public class Model implements ModelInterface{
 
-	/*the absence of booleans means that I no longer have to worry about tracking
-	 * the boolean for each piece, I just need to check to see if an entity is present 
-	 * at the targeted cell when a command is given.
-	 */
+	private ArrayList<Node> nodes = null;
 	private Cell[][] board = new Cell[10][10];
 	/*this does not allow for multiple robots. It will break really badly if more than
 	 * one are placed on the board.
@@ -387,8 +386,8 @@ public class Model implements ModelInterface{
 
 	@Override
 	public void addNode(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		//search for adjacent nodes.
+		//Add this node to the list.
 	}
 
 	@Override
