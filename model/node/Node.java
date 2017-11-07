@@ -15,6 +15,7 @@ public class Node implements NodeInterface{
 	{
 		this.x = x;
 		this.y = y;
+		this.neighbours = new ArrayList<Node>();
 	}
 	
 	@Override
@@ -38,5 +39,26 @@ public class Node implements NodeInterface{
 	public ArrayList<Node> getNeighbours() 
 	{
 		return (ArrayList<Node>)this.neighbours.clone();
+	}
+	
+	@Override
+	public void deleteAllNeighbours()
+	{
+			neighbours = new ArrayList<Node>(); //Expensive
+	}
+
+	@Override
+	public void addPrize(Prize prize) {
+		this.prize = prize;
+	}
+
+	@Override
+	public void removePrize() {
+		this.prize = null;
+	}
+	
+	public boolean hasPrize()
+	{
+		return !(this.prize == null);
 	}
 }

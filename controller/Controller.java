@@ -10,7 +10,7 @@ import robotGame.view.View;
 public class Controller
 {
 	private View the_view = new View();
-	private Model the_model = new Model();
+	private Model the_model = new Model(100, 100);
 
 	private enum Setting
 	{
@@ -20,7 +20,6 @@ public class Controller
 	Setting selected;
 	private String cmdsStr;
 	private Interpreter the_interpreter = new Interpreter();
-	private Solver the_solver = new Solver();
 
 	/*
 	 * controller constructor, note that the entire program is run from testMain
@@ -55,7 +54,7 @@ public class Controller
 			{
 				try
 				{
-					the_model.toggleWalkable(clickedCell[0], clickedCell[1]);
+					//the_model.toggleWalkable(clickedCell[0], clickedCell[1]);
 				} catch (Exception e)
 				{
 					e.printStackTrace(System.out);
@@ -63,75 +62,17 @@ public class Controller
 			}
 			if (selected == Setting.BOT)
 			{
-				if (the_model.hasBot(clickedCell[0], clickedCell[1]) == false)
-				{
-					try
-					{
-						the_model.place(clickedCell[0], clickedCell[1],
-								new Robot());
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				} else
-				{
-					try
-					{
-						System.out.println("removing rerobot");
-						the_model.removeBot(clickedCell[0], clickedCell[1]);
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				}
+				the_model.addHero(clickedCell[0], clickedCell[1]);
 			}
 			if (selected == Setting.SOURCE)
 			{
-				if (the_model.hasSrc(clickedCell[0], clickedCell[1]) == false)
-				{
-					try
-					{
-						the_model.place(clickedCell[0], clickedCell[1],
-								new Source());
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				} else
-				{
-					try
-					{
-						the_model.removeSrc(clickedCell[0], clickedCell[1]);
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				}
+				
 			}
 			if (selected == Setting.DEST)
 			{
-				if (the_model.hasDst(clickedCell[0], clickedCell[1]) == false)
-				{
-					try
-					{
-						the_model.place(clickedCell[0], clickedCell[1],
-								new Destination());
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				} else
-				{
-					try
-					{
-						the_model.removeDst(clickedCell[0], clickedCell[1]);
-					} catch (Exception e)
-					{
-						e.printStackTrace(System.out);
-					}
-				}
+				
 			}
-			the_view.redrawBoard(the_model.getBoard());
+			//the_view.redrawBoard(the_model.getBoard());
 		}
 	}
 
@@ -184,8 +125,8 @@ public class Controller
 					System.out
 							.println("User clicked OK. Board re-initialising...");
 
-					the_model = new Model();
-					the_view.redrawBoard(the_model.getBoard());
+					the_model = new Model(100, 100);
+					//the_view.redrawBoard(the_model.getBoard());
 					the_view.reenableButtons();
 					break;
 
@@ -198,16 +139,6 @@ public class Controller
 					break;
 				}
 				break;
-			case "Solve": try {
-				selected=null;
-				executeCommands(the_interpreter.interpret(the_solver.solve(the_model)));
-			} catch (InvalidCommandException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch(Exception e){
-				the_view.set_alert(e.getMessage());
-			}
-			break;
 			default:
 				System.out.println("How did you do that?");
 				break;
@@ -216,8 +147,8 @@ public class Controller
 
 		private void executeCommands(ArrayList<String> commands)
 		{
-			CommandThread ct = new CommandThread(the_view, the_model, commands);
-			new Thread(ct).start();
+			//CommandThread ct = new CommandThread(the_view, the_model, commands);
+			//new Thread(ct).start();
 		}
 	}
 }
