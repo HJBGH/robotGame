@@ -16,4 +16,6 @@ public interface ModelInterface
 	
 	public void addPrize(int x, int y);
 	public void removePrize(int x, int y);
+	
+	public void solve();
 }

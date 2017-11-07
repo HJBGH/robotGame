@@ -4,20 +4,9 @@ import java.util.ArrayList;
 
 import robotGame.model.node.*;
 
-/** 
- * 	Some of the classes in the model package have attributes and methods which are not used in the
- *	program. Examples are the destination's source list and the methods associated with this list,
- *	and the name String, held boolean and relevant methods in the source class.
- *	There are other methods and attributes like this in the cell and in the model.
- *	Originally we planned to attempt to implement multiple robots and sources, these attributes and 
- *	variables would have helped in that case. However; around about week 10 we realised we were no-where
- *	close to adding this functionality so the attributes and methods have remained unused.
- *	They have not been removed, we though it would be better to leave them in incase an
- *	opportunity to implement multiple robots and sources came up.
- */   
 public class Model implements ModelInterface{
 
-	/*TODO: implement support solving in the form of a private class and a variable to hold the
+	/*TODO: implement solving in the form of a private class and a variable to hold the
 	 * starting node
 	 */
 	//private ArrayList<Node> nodes = null;
@@ -28,9 +17,8 @@ public class Model implements ModelInterface{
 	 * one are placed on the board.
 	 */
 	//position tracking variables
-	private int[] botPos;
-	private int[] dstPos;
-	private int[] srcPos;
+
+	
 	//model constructor
 	public Model(int xMax, int yMax){
 		board = new Node[xMax][yMax];
@@ -133,5 +121,33 @@ public class Model implements ModelInterface{
 	public void removePrize(int x, int y) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void solve() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static class Hero
+	{
+		private Node position = null;
+		private boolean hasPrize = false;
+		
+		public void setPosition(Node node)
+		{
+			this.position = node;
+		}
+		
+		public void prizeToggle()
+		{
+			this.hasPrize = !hasPrize;
+		}
+		
+		//use DFS to solve mazes, we can do this recursively. But it won't preserve the starting state
+		public void solve()
+		{
+			System.out.println("Maze solving not yet implemented");
+		}
 	}
 }

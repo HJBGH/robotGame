@@ -23,11 +23,6 @@ public class Node implements NodeInterface{
 	{
 		neighbours.add(node);
 	}
-	
-	public boolean isEnd()//used to check if a node is the destination node.
-	{
-		return (this instanceof DestinationNode);
-	}
 
 	@Override
 	public void deleteNeighbour(Node node) 
