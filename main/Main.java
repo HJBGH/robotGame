@@ -17,6 +17,9 @@ public class Main {
 	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		
+		//The view should register itself with the model to recieve updates about events in the model.
+		//controller is bound to view to recieve input from the UI.
+		//glue components together with observer pattern
 		//View test_view = new View();
 		//Model test_model = new Model();
 		//Controller test_control = new Controller(test_view, test_model);

@@ -1,6 +1,5 @@
 package robotGame.model;
 
-import java.util.Observable;
 
 public interface ModelInterface
 {
@@ -11,11 +10,10 @@ public interface ModelInterface
 	public void addHero(int x, int y);
 	public void removeHero(int x, int y);
 	
-	public void addEndNode(int x, int y);
-	public void removeEndNode(int x, int y);
+	public void toggleGoalNode(int x, int y);
 	
 	public void addPrize(int x, int y);
 	public void removePrize(int x, int y);
 	
-	public void solve();
+	public void solve(); //The model runs its solver
 }

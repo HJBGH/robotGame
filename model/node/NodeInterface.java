@@ -10,6 +10,6 @@ public interface NodeInterface
 	public ArrayList<Node> getNeighbours();
 	public void deleteAllNeighbours();
 	public void addPrize(Prize prize);
-	public void removePrize();
+	public Prize removePrize();
 	public boolean hasPrize();
 }

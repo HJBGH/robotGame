@@ -9,7 +9,9 @@ public class Node implements NodeInterface{
 	private int x;
 	private int y;
 	private ArrayList<Node> neighbours = null;
-	private Prize prize = null; //A prize, the hero will look for this.
+	private Prize prize = null; //A prize, the hero/solver will look for this.
+	private boolean isGoal = false; //If set to true then this node
+								  //represents the final destination of the game.
 	
 	public Node(int x, int y)
 	{
@@ -48,12 +50,25 @@ public class Node implements NodeInterface{
 	}
 
 	@Override
-	public void removePrize() {
+	public Prize removePrize() {
+		Prize retval = prize;
 		this.prize = null;
+		return retval;
 	}
 	
 	public boolean hasPrize()
 	{
 		return !(this.prize == null);
 	}
+	
+	public boolean isGoal()
+	{
+		return isGoal;
+	}
+	
+	public void toggleGoal()
+	{
+		this.isGoal = !this.isGoal;
+	}
+	
 }

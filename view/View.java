@@ -1,20 +1,16 @@
 package robotGame.view;
 
 import robotGame.model.*;
-import robotGame.model.Robot;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 
-/*this version of view is a slightly modified version of Jack's view code.
- * a number of changes have been made though:
- * 		The view now extends JFrame instead of possessing one
- * 		Ilya's cell finding ideas have been worked into methods here
- * 		The view can now has the method to redraw the board.
+import java.util.Observable;
+import java.util.Observer;
+/*
+ * View for the robot game
  */
-public class View extends JFrame
+public class View extends JFrame implements Observer 
 {
 	private JPanel gui = new JPanel(new BorderLayout(1, 3));
 	private JPanel board = new JPanel();
@@ -141,23 +137,6 @@ public class View extends JFrame
 
 		return JOptionPane.NO_OPTION;
 	}
-
-	public void displayInstructions()
-	{
-		//TODO; write instructions frame
-	}
-	
-		
-		// flash the newGame button's background 
-	private void flashJButtonColor(JButton button, Color color)
-	{
-	
-	}
-		
-	// flash the alertBox TextField's background - WINRAR MODE!
-	private void flashJTextFieldColor(JTextField textfield)
-	{
-	}
 		
 	private void pause(int time) 
 	{
@@ -181,9 +160,6 @@ public class View extends JFrame
 		commandEnter.setEnabled(false);
 		commandLine.setText("");
 		commandLine.setEditable(false);
-		flashJTextFieldColor(alertBox);
-		pause(1000);
-		flashJButtonColor(newGame, Color.LIGHT_GRAY);
 	}
 
 	public void reenableButtons()
@@ -204,58 +180,6 @@ public class View extends JFrame
 		Image newImg = img.getScaledInstance(50, 50,
 				java.awt.Image.SCALE_SMOOTH);
 		return newImg;
-	}
-
-	/*
-	 * board drawing method, all this does is redraw the board using a copy of
-	 * the board model. Mostly called inside event handlers in controller to update
-	 * the view when the model data changes.
-	 */
-	public void redrawBoard(Cell[][] boardData)
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			// System.out.println("You're in the first for loop");
-			for (int j = 0; j < 10; j++)
-			{
-				cell[i][j].setIcon(null);
-				// System.out.println("You're in the second for loop");
-				if (boardData[i][j].getWalkable() == false)
-				{
-					// System.out.println("You're in the walkable false");
-					cell[i][j].setBackground(Color.darkGray);
-					// cell[i][j].repaint();
-				} else
-				{
-					cell[i][j].setBackground(Color.white);
-					if (boardData[i][j].hasBot() && boardData[i][j].hasSrc()
-							&& boardData[i][j].hasDst())
-					{
-						cell[i][j].setBackground(Color.BLUE);
-					} else if (boardData[i][j].hasBot()
-							&& boardData[i][j].hasSrc())
-					{
-						// bowser has peach
-						//cell[i][j].setIcon(bowserAndPeach);
-					} else if (boardData[i][j].hasBot())
-					{
-						cell[i][j].setBackground(Color.CYAN);
-						if (boardData[i][j].botHasSrc())
-						{
-							cell[i][j].setBackground(Color.MAGENTA);
-						}
-
-					} else if (boardData[i][j].hasSrc())
-					{
-						cell[i][j].setBackground(Color.GREEN);
-					} else if (boardData[i][j].hasDst())
-					{
-						cell[i][j].setBackground(Color.ORANGE);
-					}
-
-				}
-			}
-		}
 	}
 
 	// getters and setters
@@ -347,5 +271,11 @@ public class View extends JFrame
 			g.setColor(Color.GRAY);
 			g.fillRect(0,0,this.x, this.y);
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }
