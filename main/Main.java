@@ -22,6 +22,7 @@ public class Main {
 		//glue components together with observer pattern
 		//View test_view = new View();
 		//Model test_model = new Model();
+		//test_model.addObserver(test_view);
 		//Controller test_control = new Controller(test_view, test_model);
 		
 	}

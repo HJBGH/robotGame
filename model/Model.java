@@ -3,9 +3,10 @@ package robotGame.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import robotGame.model.infoBoard.InfoBoard;
 import robotGame.model.node.*;
 
-public class Model extends Observable implements ModelInterface{
+public class Model implements ModelInterface{
 
 	/*TODO: implement solving in the form of a private class and a variable to hold the
 	 * starting node
@@ -14,12 +15,13 @@ public class Model extends Observable implements ModelInterface{
 	 * TODO:
 	 * consider removing x,y coordinate info from inside Node, I don't think node needs it.
 	 */
-	//TODO: add controller updates to each of these methods
+	//TODO: add infoBoard updates to each of these methods
 	//private ArrayList<Node> nodes = null;
 	private Node[][] board = null;
 	private static Hero solver = null;
 	private int xMax;
 	private int yMax;
+	private InfoBoard ib = null;
 	/*this does not allow for multiple robots. It will break really badly if more than
 	 * one are placed on the board.
 	 */
@@ -27,7 +29,7 @@ public class Model extends Observable implements ModelInterface{
 
 	
 	//model constructor
-	public Model(int xMax, int yMax) throws ModelException{
+	public Model(int xMax, int yMax, InfoBoard infoBoard) throws ModelException{
 		if(xMax < 1 || yMax < 1)
 		{
 			throw new ModelException("Cannot have negative dimensions.");
@@ -36,6 +38,7 @@ public class Model extends Observable implements ModelInterface{
 		this.xMax = xMax-1;
 		this.yMax = yMax-1;
 		this.solver = new Hero();
+		this.ib = infoBoard;
 	}
 	
 	//board returner AAAAARRRRGH DELET THIS
@@ -81,7 +84,6 @@ public class Model extends Observable implements ModelInterface{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x][y-1].addNeighbour(newNode);
 		}
-		setChanged();
 	}
 
 	@Override
@@ -97,7 +99,6 @@ public class Model extends Observable implements ModelInterface{
 		removed.deleteAllNeighbours();
 		this.board[x][y] = null; //point to null;
 		removed = null; //all mentions of the node removed
-		setChanged();
 	}
 
 	@Override
@@ -112,31 +113,26 @@ public class Model extends Observable implements ModelInterface{
 		}
 		solver.setPosition(board[x][y]);
 		//set the start point of the solver to this node.
-		setChanged();
 	}
 
 	@Override
 	public void removeHero(int x, int y) {
 		solver.setPosition(null);
-		setChanged();
 	}
 
 	@Override
 	public void toggleGoalNode(int x, int y) {
 		board[x][y].toggleGoal();
-		setChanged();
 	}
 
 	@Override
 	public void addPrize(int x, int y) {
 		board[x][y].addPrize(new Prize()); //this will fail if the node is null
-		setChanged();
 	}
 
 	@Override
 	public Prize removePrize(int x, int y) {
 		Prize prize = board[x][y].removePrize();
-		setChanged();
 		return prize; //technically we don't need to be passing this reference everywhere
 	}
 

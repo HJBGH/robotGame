@@ -106,7 +106,7 @@ public class ModelTests {
 	public void testBadModelConstructorInput()
 	{
 		try{
-			Model model = new Model(0, 0);
+			Model model = new Model(0, 0, null);
 			fail("The model constructor should've failed.");
 		} catch (ModelException e) {
 			
@@ -119,7 +119,7 @@ public class ModelTests {
 		//test adding and removing nodes in a model.
 		Model testModel = null;
 		try {
-			testModel = new Model(10, 10);
+			testModel = new Model(10, 10, null);
 		} catch (ModelException e) {
 			fail("Model constructor failed");
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class ModelTests {
 	{
 		Model testModel = null;
 		try {
-			testModel = new Model(10, 10);
+			testModel = new Model(10, 10, null);
 		} catch (ModelException e)
 		{
 			throw (e);
@@ -147,7 +147,7 @@ public class ModelTests {
 		Model testModel = null;
 		try
 		{
-			testModel = new Model(10, 10);
+			testModel = new Model(10, 10, null);
 		} catch (Exception e)
 		{
 			throw (e);
