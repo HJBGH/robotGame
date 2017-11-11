@@ -14,6 +14,7 @@ public class Model implements ModelInterface{
 	 * consider adding exceptions
 	 * TODO:
 	 * consider removing x,y coordinate info from inside Node, I don't think node needs it.
+	 * TODO: This class needs a method for changing its dimensions
 	 */
 	//TODO: add infoBoard updates to each of these methods
 	//private ArrayList<Node> nodes = null;

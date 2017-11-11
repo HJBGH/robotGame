@@ -6,6 +6,7 @@ import java.awt.Point;
 /*
  * This class will contain public information about the model for use by the view. it is observable.
  * It should probably be a singleton.
+ * It's incredibly inefficient to re-draw the entire board for one change, but I can work that out later
  */
 public class InfoBoard extends Observable{
 	//member variables will represent information about the model.
@@ -17,31 +18,42 @@ public class InfoBoard extends Observable{
 	{
 		//we risk adding loads of duplicates here
 		nodePoints.add(new Point(x, y));
+		setChanged(); //set changed
+		notifyObservers();
 	}
 	
 	public void removeNodePoint(int x, int y)
 	{
 		//iterate through the hashset, see if there already exists and object like this.
 		nodePoints.remove(new Point(x, y));//hopefully Equals() is defined in point based on X and Y co-ordinates
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void addPrizePoint(int x, int y)
 	{
-		//TODO
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void removePrize(int x, int y)
 	{
 		//TODO
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void addDestination(int x, int y)
 	{
 		//TODO
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void removeDestination(int x, int y)
 	{
 		//TODO
+		setChanged();
+		notifyObservers();
 	}
 }

@@ -73,8 +73,7 @@ public class View extends JFrame implements Observer
 		menu.add(destination);
 		gui.add(menu, BorderLayout.NORTH);
 
-		board = new JPanel(new GridLayout(10, 10));
-		testBoard = new Board(900, 900, 10);
+		testBoard = new Board(900, 900, 10, 10);
 		//gui.add(board, BorderLayout.CENTER);
 		gui.add(testBoard);
 
@@ -193,23 +192,12 @@ public class View extends JFrame implements Observer
 		alertBox.setText(str);
 	}
 
-	// listener code
-	// adding the listener for the board.
-	public void addboardListener(ActionListener board_ear)
+	public void addBoardMouseListener(MouseListener ml)
 	{
-		for (int y = 0; y < 10; y++)
-		{
-			for (int x = 0; x < 10; x++)
-			{
-				cell[y][x].addActionListener(board_ear);
-			}
-		}
-	}
-
-	public void addGboardListener(MouseListener ml)
-	{
+		//used to tie the board JPanel to the controller
 		this.testBoard.addMouseListener(ml);
 	}
+	
 	// adding listeners for the regular buttons.
 	public void addButtonListener(ActionListener general_ear)
 	{
@@ -257,25 +245,27 @@ public class View extends JFrame implements Observer
 		//todo
 		private int x;
 		private int y;
-		private int cells;
+		private int cellsX;
+		private int cellsY;
 		
-		public Board(int x, int y, int cells)//x, y dimensions for board size and number of cells per column and row.
+		public Board(int x, int y, int cellsX, int cellsY)//x, y dimensions for board size and number of cells per column and row.
 		{
 			this.x = x;
 			this.y = y;
-			this.cells = cells;
+			this.cellsX = cellsX;
+			this.cellsY = cellsY;
 		}
 		
 		public void paint(Graphics g)
 		{
-			g.setColor(Color.GRAY);
+			g.setColor(Color.BLUE);
 			g.fillRect(0,0,this.x, this.y);
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub, method for updating the board representation
 		
 	}
 }

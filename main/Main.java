@@ -1,12 +1,8 @@
 package robotGame.main;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import org.omg.PortableServer.THREAD_POLICY_ID;
-
 import robotGame.view.View;
 import robotGame.model.*;
+import robotGame.model.infoBoard.InfoBoard;
 import robotGame.controller.*;
 
 /**
@@ -14,18 +10,19 @@ import robotGame.controller.*;
  *
  */
 public class Main {
-	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+	public static void main(String args[]) throws ModelException{
 		
 		//TODO: consider writing my own point / co-ordinate class
 		//The view should register itself with the model to recieve updates about events in the model.
 		//controller is bound to view to recieve input from the UI.
 		//glue components together with observer pattern
-		//View test_view = new View();
-		//Model test_model = new Model();
-		//test_model.addObserver(test_view);
-		//Controller test_control = new Controller(test_view, test_model);
-		
+		InfoBoard infoBoard = new InfoBoard();
+		Model theModel = new Model(20, 20, infoBoard);
+		View theView = new View();
+		infoBoard.addObserver(theView);
+		theView.setVisible(true);
+		Controller theController = new Controller();
+		theView.addBoardMouseListener(theController);
 	}
 
 }
