@@ -11,6 +11,7 @@ import org.junit.Test;
 
 public class ModelTests {
 	
+	//I'm going to need tests for observerObservable related methods
 	@Test
 	public void test1()
 	{
@@ -87,5 +88,91 @@ public class ModelTests {
 		}		
 	}
 	
+	@Test
+	public void test5()
+	{
+		//test adding and removing a prize from a node
+		Node node = new Node(1, 1);
+		Prize prize = new Prize();
+		node.addPrize(prize);
+		if(node.hasPrize() == false)
+			fail("oh god this is so simple how could it fail");
+		Prize gotPrize = node.removePrize();
+		if(!prize.equals(gotPrize))
+			fail("Something went wrong getting the prize");
+	}
+	
+	@Test
+	public void testBadModelConstructorInput()
+	{
+		try{
+			Model model = new Model(0, 0);
+			fail("The model constructor should've failed.");
+		} catch (ModelException e) {
+			
+		}
+	}
+	
+	@Test
+	public void test_model_nodes()
+	{
+		//test adding and removing nodes in a model.
+		Model testModel = null;
+		try {
+			testModel = new Model(10, 10);
+		} catch (ModelException e) {
+			fail("Model constructor failed");
+			e.printStackTrace();
+		}
+		testModel.addNode(0,0);
+		testModel.addNode(9, 9);
+		testModel.addNode(9, 0);
+		testModel.addNode(0, 9);
+	}
+	
+	public void testAddPrize() throws ModelException
+	{
+		Model testModel = null;
+		try {
+			testModel = new Model(10, 10);
+		} catch (ModelException e)
+		{
+			throw (e);
+		}
+		testModel.addPrize(5, 5);
+	}
+	
+	public void testRemovePrize() throws Exception
+	{
+		Model testModel = null;
+		try
+		{
+			testModel = new Model(10, 10);
+		} catch (Exception e)
+		{
+			throw (e);
+		}
+		testModel.addPrize(9, 9);
+		Prize testPrize = testModel.removePrize(0, 0);
+		if(testPrize != null)
+		{
+			fail("Prize should be null");//you're trying to remove a prize where there is none.
+		}
+		testPrize = testModel.removePrize(9, 9);
+		if(testPrize == null)
+		{
+			fail("Prize shouldn't be null");
+		}
+	}
+	
+	public void test8()
+	{
+		//test adding and removing destinations in a model.
+	}
+	
+	public void test9()
+	{
+		//test solver. TODO: think up tests for the solver
+	}
 
 }

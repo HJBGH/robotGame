@@ -6,8 +6,8 @@ import robotGame.model.Prize;
 
 public class Node implements NodeInterface{
 
-	private int x;
-	private int y;
+	public int x;//probably stupid to have these public
+	public int y;
 	private ArrayList<Node> neighbours = null;
 	private Prize prize = null; //A prize, the hero/solver will look for this.
 	private boolean isGoal = false; //If set to true then this node

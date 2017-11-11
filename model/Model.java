@@ -27,10 +27,14 @@ public class Model extends Observable implements ModelInterface{
 
 	
 	//model constructor
-	public Model(int xMax, int yMax){
+	public Model(int xMax, int yMax) throws ModelException{
+		if(xMax < 1 || yMax < 1)
+		{
+			throw new ModelException("Cannot have negative dimensions.");
+		}
 		this.board = new Node[xMax][yMax];
-		this.xMax = xMax;
-		this.yMax = yMax;
+		this.xMax = xMax-1;
+		this.yMax = yMax-1;
 		this.solver = new Hero();
 	}
 	
@@ -45,7 +49,9 @@ public class Model extends Observable implements ModelInterface{
 	{
 		
 		//the situation where x and y are greater or smaller than the bounds of the
-		//board will never arise.
+		//board will never arise. CHECK FOR IT ANYWAY
+		
+		//also need to check if there's a node already there
 		
 		//create a new node
 		Node newNode = new Node(x, y);
@@ -54,8 +60,8 @@ public class Model extends Observable implements ModelInterface{
 		this.board[x][y] = newNode;
 		
 		//check for neighbours, be sure not to access and index outside of the array
-		//abuse lazy evaluation
-		if(this.xMax <= x+1 && this.board[x+1][y] != null)//east neighbour
+		//abuse lazy evaluation <-- bad idea
+		if(x < this.xMax && this.board[x+1][y] != null)//east neighbour
 		{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x+1][y].addNeighbour(newNode);
@@ -65,7 +71,7 @@ public class Model extends Observable implements ModelInterface{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x+1][y].addNeighbour(newNode);
 		}
-		if(this.yMax <= y+1 && this.board[x][y+1] != null)//north neighbour
+		if(y < this.yMax && this.board[x][y+1] != null)//north neighbour
 		{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x][y+1].addNeighbour(newNode);
@@ -123,14 +129,15 @@ public class Model extends Observable implements ModelInterface{
 
 	@Override
 	public void addPrize(int x, int y) {
-		board[x][y].addPrize(new Prize());
+		board[x][y].addPrize(new Prize()); //this will fail if the node is null
 		setChanged();
 	}
 
 	@Override
-	public void removePrize(int x, int y) {
-		board[x][y].removePrize();
+	public Prize removePrize(int x, int y) {
+		Prize prize = board[x][y].removePrize();
 		setChanged();
+		return prize; //technically we don't need to be passing this reference everywhere
 	}
 
 	@Override
@@ -138,6 +145,7 @@ public class Model extends Observable implements ModelInterface{
 		solver.solve();
 	}
 	
+	//figure out how to set changed from within this class
 	private class Hero
 	{
 		private Node position = null;
@@ -168,7 +176,9 @@ public class Model extends Observable implements ModelInterface{
 				//n for neighbours
 				if(position.hasPrize())
 				{
-					setPrize(position.removePrize());
+					//idk if this will work properly
+					setPrize(Model.this.removePrize(position.x, position.y));
+					//TODO set changed here! maybe not. Remove prize already removes it.
 				}
 				ArrayList<Node> n = position.getNeighbours();
 				//we're going to have to set change in here. perhaps solver should just be its own method.

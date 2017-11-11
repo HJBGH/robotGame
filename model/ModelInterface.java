@@ -13,7 +13,7 @@ public interface ModelInterface
 	public void toggleGoalNode(int x, int y);
 	
 	public void addPrize(int x, int y);
-	public void removePrize(int x, int y);
+	public Prize removePrize(int x, int y);
 	
 	public void solve(); //The model runs its solver
 }
