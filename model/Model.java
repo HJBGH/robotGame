@@ -86,6 +86,8 @@ public class Model implements ModelInterface{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x][y-1].addNeighbour(newNode);
 		}
+		
+		this.ib.addNodePoint(x, y);
 	}
 
 	@Override

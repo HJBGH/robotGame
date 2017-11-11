@@ -10,10 +10,20 @@ import robotGame.view.View;
 public class Controller implements MouseListener
 {
 	//TODO: Need an options enumeration for placing pieces
+	//this is going to need a reference to the model.
+	private Model model = null;
+	
+	
+	public Controller(Model theModel)
+	{
+		this.model = theModel;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("MouseClicked");
-		
+		//need to do event processing in here
+		model.addNode(0, 0);
 	}
 
 	@Override

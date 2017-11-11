@@ -266,6 +266,6 @@ public class View extends JFrame implements Observer
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub, method for updating the board representation
-		
+		System.out.println("update called");
 	}
 }

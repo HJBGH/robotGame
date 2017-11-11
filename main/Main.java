@@ -21,7 +21,7 @@ public class Main {
 		View theView = new View();
 		infoBoard.addObserver(theView);
 		theView.setVisible(true);
-		Controller theController = new Controller();
+		Controller theController = new Controller(theModel);
 		theView.addBoardMouseListener(theController);
 	}
 
