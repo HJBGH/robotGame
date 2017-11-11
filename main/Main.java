@@ -17,6 +17,7 @@ public class Main {
 	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		
+		//TODO: consider writing my own point / co-ordinate class
 		//The view should register itself with the model to recieve updates about events in the model.
 		//controller is bound to view to recieve input from the UI.
 		//glue components together with observer pattern

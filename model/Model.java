@@ -32,7 +32,7 @@ public class Model implements ModelInterface{
 	public Model(int xMax, int yMax, InfoBoard infoBoard) throws ModelException{
 		if(xMax < 1 || yMax < 1)
 		{
-			throw new ModelException("Cannot have negative dimensions.");
+			throw new ModelException("Must have positive dimensions.");
 		}
 		this.board = new Node[xMax][yMax];
 		this.xMax = xMax-1;
@@ -42,9 +42,10 @@ public class Model implements ModelInterface{
 	}
 	
 	//board returner AAAAARRRRGH DELET THIS
+	/*
 	public Node[][] getBoard(){
 		return board; //<-- !! privacy leak FIX THIS SHIT
-	}
+	}*/
 	
 	
 	@Override

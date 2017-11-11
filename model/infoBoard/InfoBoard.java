@@ -1,7 +1,8 @@
 package robotGame.model.infoBoard;
 
 import java.util.Observable;
-
+import java.util.HashSet;
+import java.awt.Point;
 /*
  * This class will contain public information about the model for use by the view. it is observable.
  * It should probably be a singleton.
@@ -9,4 +10,38 @@ import java.util.Observable;
 public class InfoBoard extends Observable{
 	//member variables will represent information about the model.
 	//make a method to notify the view of updates to this object
+	//hashset for storing relevant information
+	private HashSet<Point> nodePoints = new HashSet<Point>();
+	private HashSet<Point> prizePoints = new HashSet<Point>();
+	public void addNodePoint(int x, int y)
+	{
+		//we risk adding loads of duplicates here
+		nodePoints.add(new Point(x, y));
+	}
+	
+	public void removeNodePoint(int x, int y)
+	{
+		//iterate through the hashset, see if there already exists and object like this.
+		nodePoints.remove(new Point(x, y));//hopefully Equals() is defined in point based on X and Y co-ordinates
+	}
+	
+	public void addPrizePoint(int x, int y)
+	{
+		//TODO
+	}
+	
+	public void removePrize(int x, int y)
+	{
+		//TODO
+	}
+	
+	public void addDestination(int x, int y)
+	{
+		//TODO
+	}
+	
+	public void removeDestination(int x, int y)
+	{
+		//TODO
+	}
 }
