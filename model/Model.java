@@ -63,7 +63,7 @@ public class Model implements ModelInterface{
 		
 		//insert into array
 		this.board[x][y] = newNode;
-		
+		System.out.println("node added at: " + x +", "+ y);
 		//check for neighbours, be sure not to access and index outside of the array
 		//abuse lazy evaluation <-- bad idea
 		if(x < this.xMax && this.board[x+1][y] != null)//east neighbour
@@ -71,19 +71,19 @@ public class Model implements ModelInterface{
 			newNode.addNeighbour(this.board[x+1][y]);
 			this.board[x+1][y].addNeighbour(newNode);
 		}
-		if(x-1 >= 0 && this.board[x-1][y] != null)//west neighbour
+		if(x > 0 && this.board[x-1][y] != null)//west neighbour
 		{
-			newNode.addNeighbour(this.board[x+1][y]);
-			this.board[x+1][y].addNeighbour(newNode);
+			newNode.addNeighbour(this.board[x-1][y]);
+			this.board[x-1][y].addNeighbour(newNode);
 		}
 		if(y < this.yMax && this.board[x][y+1] != null)//north neighbour
 		{
-			newNode.addNeighbour(this.board[x+1][y]);
+			newNode.addNeighbour(this.board[x][y+1]);
 			this.board[x][y+1].addNeighbour(newNode);
 		}
-		if(y-1 >= 0 && this.board[x][y-1] != null)//south neighbour
+		if(y > 0 && this.board[x][y-1] != null)//south neighbour
 		{
-			newNode.addNeighbour(this.board[x+1][y]);
+			newNode.addNeighbour(this.board[x][y-1]);
 			this.board[x][y-1].addNeighbour(newNode);
 		}
 		
@@ -103,6 +103,8 @@ public class Model implements ModelInterface{
 		removed.deleteAllNeighbours();
 		this.board[x][y] = null; //point to null;
 		removed = null; //all mentions of the node removed
+		
+		this.ib.removeNodePoint(x, y);
 	}
 
 	@Override

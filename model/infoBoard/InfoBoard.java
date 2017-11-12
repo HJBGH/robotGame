@@ -12,7 +12,7 @@ public class InfoBoard extends Observable{
 	//member variables will represent information about the model.
 	//make a method to notify the view of updates to this object
 	//hashset for storing relevant information
-	private HashSet<Point> nodePoints = new HashSet<Point>();
+	public HashSet<Point> nodePoints = new HashSet<Point>();
 	private HashSet<Point> prizePoints = new HashSet<Point>();
 	public void addNodePoint(int x, int y)
 	{

@@ -1,6 +1,8 @@
 package robotGame.view;
 
 import robotGame.model.*;
+import robotGame.model.infoBoard.InfoBoard;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,6 +14,14 @@ import java.util.Observer;
  */
 public class View extends JFrame implements Observer 
 {
+	/*
+	 * stupid globals for bad code. How do I make the size of the board dynamic?
+	 */
+	private static final int BOARD_HEIGHT = 900;
+	private static final int BOARD_WIDTH = 900;
+	private static final int CELLS_X = 20;
+	private static final int CELLS_Y = 20;
+	
 	private JPanel gui = new JPanel(new BorderLayout(1, 3));
 	private JPanel board = new JPanel();
 	private JButton cell[][] = new JButton[10][10];
@@ -43,12 +53,14 @@ public class View extends JFrame implements Observer
 	
 	//at the end of the day the Board class functions as the actual view.
 	private Board testBoard;
+	private InfoBoard ib;
 
 	public View()
 	{
 		/*
 		 * When adding elements to JPanels/JFrames, add them first, then set
-		 * their size, margin, etc.
+		 * their size, margin, etc. This needs a parameter for the number of cells
+		 * I should probably re-think it.
 		 */
 
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -73,7 +85,7 @@ public class View extends JFrame implements Observer
 		menu.add(destination);
 		gui.add(menu, BorderLayout.NORTH);
 
-		testBoard = new Board(900, 900, 10, 10);
+		testBoard = new Board(900, 900, 20, 20); //CHANGE THE 20, NO MAGIC NUMBERS
 		//gui.add(board, BorderLayout.CENTER);
 		gui.add(testBoard);
 
@@ -95,23 +107,6 @@ public class View extends JFrame implements Observer
 		gui.add(inputPanel, BorderLayout.SOUTH);
 
 		// Draw new board
-		initialiseBoard();
-	}
-
-	/* Method to initialise the board (draws clean game board) */
-	public void initialiseBoard()
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			for (int j = 0; j < 10; j++)
-			{
-				cell[i][j] = new JButton();
-				board.add(cell[i][j]);
-				Insets buttonMargin = new Insets(0, 0, 0, 0);
-				cell[i][j].setMargin(buttonMargin);
-				cell[i][j].setBackground(Color.darkGray);
-			}
-		}
 	}
 
 	public int getNewGameOption()
@@ -207,25 +202,6 @@ public class View extends JFrame implements Observer
 		}
 	}
 
-	// getting the clicked cell
-	public int[] getClickedCell(ActionEvent clickEvent)
-	{
-		//TODO; Fix this ham fisted attempt at event handling. jesus christ this is awful
-		for (int y = 0; y < 10; y++)
-		{
-			for (int x = 0; x < 10; x++)
-			{
-				if (cell[y][x] == clickEvent.getSource())
-				{
-					int[] a = { x, y };
-					return a;
-				}
-			}
-		}
-		int[] a = { -1, -1 };
-		return a;
-	}
-
 	// getting the clicked button
 	public String getClickedButton(ActionEvent buttonEvent)
 	{
@@ -258,8 +234,15 @@ public class View extends JFrame implements Observer
 		
 		public void paint(Graphics g)
 		{
-			g.setColor(Color.BLUE);
+			g.setColor(Color.GRAY);
 			g.fillRect(0,0,this.x, this.y);
+			if(View.this.ib == null)
+				return;
+			for(Point point : View.this.ib.nodePoints)
+			{
+				g.setColor(Color.WHITE);
+				g.fillRect((BOARD_WIDTH/cellsX) * point.x, (BOARD_HEIGHT/cellsY) * point.y, BOARD_WIDTH/cellsX, BOARD_HEIGHT/cellsY);
+			}
 		}
 	}
 
@@ -267,5 +250,7 @@ public class View extends JFrame implements Observer
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub, method for updating the board representation
 		System.out.println("update called");
+		this.ib = (InfoBoard)o;
+		testBoard.repaint();
 	}
 }
