@@ -117,7 +117,7 @@ public class Model implements ModelInterface{
 			this.toggleNode(x, y);
 		}
 		solver.setPosition(board[x][y]);
-		//this.ib.
+		this.ib.setHeroPoint(x, y);
 		//set the start point of the solver to this node.
 	}
 

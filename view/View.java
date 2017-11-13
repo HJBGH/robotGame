@@ -252,6 +252,9 @@ public class View extends JFrame implements Observer
 				g.fillRect((this.getWidth()/cellsX) * dest.x, (this.getHeight()/cellsY) * dest.y,
 						this.getWidth()/cellsX, this.getHeight()/cellsY);
 			}
+			g.setColor(Color.BLUE);
+			g.fillOval((this.getWidth()/cellsX) * View.this.ib.heroPoint.x, (this.getHeight()/cellsY) * View.this.ib.heroPoint.y,
+						this.getWidth()/cellsX, this.getHeight()/cellsY);
 		}
 	}
 

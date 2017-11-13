@@ -48,7 +48,8 @@ public class Controller implements MouseListener, ActionListener
 			model.toggleGoalNode((int)(e.getX()/x), (int)(e.getY()/y));
 			break;
 		case HERO:
-			//System.out.println
+			System.out.println("Toggling hero location - Controller");
+			model.addHero((int)(e.getX()/x), (int)(e.getY()/y));
 			break;
 		case PRIZE:
 			break;
