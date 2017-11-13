@@ -50,61 +50,60 @@ public class Model implements ModelInterface{
 	
 	
 	@Override
-	public void addNode(int x, int y)
+	public void toggleNode(int x, int y)
 	{
 		
 		//the situation where x and y are greater or smaller than the bounds of the
 		//board will never arise. CHECK FOR IT ANYWAY
 		
 		//also need to check if there's a node already there
+		if(this.board[x][y] != null)
+		{
+			//delete pre-existing node, then return
+			Node removed = this.board[x][y];
+			//remove mention of the node from neighbours
+			for(Node neighbour: removed.getNeighbours())
+			{
+				neighbour.deleteNeighbour(removed); //this should work.
+			}
+			removed.deleteAllNeighbours();
+			this.board[x][y] = null; //point to null;
+			removed = null; //all mentions of the node removed
+			
+			this.ib.removeNodePoint(x, y);
+		}
+		else
+		{
+			//create a new node
+			Node newNode = new Node(x, y);
 		
-		//create a new node
-		Node newNode = new Node(x, y);
-		
-		//insert into array
-		this.board[x][y] = newNode;
-		System.out.println("node added at: " + x +", "+ y);
-		//check for neighbours, be sure not to access and index outside of the array
-		//abuse lazy evaluation <-- bad idea
-		if(x < this.xMax && this.board[x+1][y] != null)//east neighbour
-		{
-			newNode.addNeighbour(this.board[x+1][y]);
-			this.board[x+1][y].addNeighbour(newNode);
+			//insert into array
+			this.board[x][y] = newNode;
+			System.out.println("node added at: " + x +", "+ y);
+			//check for neighbours, be sure not to access and index outside of the array
+			//abuse lazy evaluation <-- bad idea
+			if(x < this.xMax && this.board[x+1][y] != null)//east neighbour
+			{
+				newNode.addNeighbour(this.board[x+1][y]);
+				this.board[x+1][y].addNeighbour(newNode);
+			}
+			if(x > 0 && this.board[x-1][y] != null)//west neighbour
+			{
+				newNode.addNeighbour(this.board[x-1][y]);
+				this.board[x-1][y].addNeighbour(newNode);
+			}
+			if(y < this.yMax && this.board[x][y+1] != null)//north neighbour
+			{
+				newNode.addNeighbour(this.board[x][y+1]);
+				this.board[x][y+1].addNeighbour(newNode);
+			}
+			if(y > 0 && this.board[x][y-1] != null)//south neighbour
+			{
+				newNode.addNeighbour(this.board[x][y-1]);
+				this.board[x][y-1].addNeighbour(newNode);
+			}
+			this.ib.addNodePoint(x, y);
 		}
-		if(x > 0 && this.board[x-1][y] != null)//west neighbour
-		{
-			newNode.addNeighbour(this.board[x-1][y]);
-			this.board[x-1][y].addNeighbour(newNode);
-		}
-		if(y < this.yMax && this.board[x][y+1] != null)//north neighbour
-		{
-			newNode.addNeighbour(this.board[x][y+1]);
-			this.board[x][y+1].addNeighbour(newNode);
-		}
-		if(y > 0 && this.board[x][y-1] != null)//south neighbour
-		{
-			newNode.addNeighbour(this.board[x][y-1]);
-			this.board[x][y-1].addNeighbour(newNode);
-		}
-		
-		this.ib.addNodePoint(x, y);
-	}
-
-	@Override
-	public void removeNode(int x, int y)
-	{
-		//TODO: Add controller updates
-		Node removed = this.board[x][y];
-		//remove mention of the node from neighbours
-		for(Node neighbour: removed.getNeighbours())
-		{
-			neighbour.deleteNeighbour(removed); //this should work.
-		}
-		removed.deleteAllNeighbours();
-		this.board[x][y] = null; //point to null;
-		removed = null; //all mentions of the node removed
-		
-		this.ib.removeNodePoint(x, y);
 	}
 
 	@Override
@@ -115,7 +114,7 @@ public class Model implements ModelInterface{
 		
 		if(board[x][y] == null)
 		{
-			this.addNode(x, y);
+			this.toggleNode(x, y);
 		}
 		solver.setPosition(board[x][y]);
 		//set the start point of the solver to this node.

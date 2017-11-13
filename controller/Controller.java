@@ -36,7 +36,7 @@ public class Controller implements MouseListener, ActionListener
 		double x = 900/cells_x;
 		double y = 900/cells_y;
 		
-		model.addNode((int)(e.getX()/x), (int)(e.getY()/y));
+		model.toggleNode((int)(e.getX()/x), (int)(e.getY()/y));
 	}
 
 	@Override

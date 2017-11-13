@@ -4,9 +4,10 @@ package robotGame.model;
 public interface ModelInterface
 {
 	//provides methods for interacting with the model.
-	public void addNode(int x, int y); //add a node with the co-ordinates x,y
-	public void removeNode(int x, int y); //remove a node with the coordinates x,y
+	//Combine these two node methods into a toggle node method.
+	public void toggleNode(int x, int y); //Toggle the existance node with the co-ordinates x,y
 	
+	//turn te hero method into a toggle as well
 	public void addHero(int x, int y);
 	public void removeHero(int x, int y);
 	

@@ -124,10 +124,10 @@ public class ModelTests {
 			fail("Model constructor failed");
 			e.printStackTrace();
 		}
-		testModel.addNode(0,0);
-		testModel.addNode(9, 9);
-		testModel.addNode(9, 0);
-		testModel.addNode(0, 9);
+		testModel.toggleNode(0,0);
+		testModel.toggleNode(9, 9);
+		testModel.toggleNode(9, 0);
+		testModel.toggleNode(0, 9);
 	}
 	
 	public void testAddPrize() throws ModelException
