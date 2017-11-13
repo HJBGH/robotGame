@@ -3,6 +3,8 @@ package robotGame.controller;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 import robotGame.model.*;
 import robotGame.model.Model;
 import robotGame.view.View;
@@ -27,39 +29,34 @@ public class Controller implements MouseListener, ActionListener
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("MouseClicked");
 		//need to do event processing in here
-		//this doesn't actually work, we need the actual co-ordinates of the game
-		//Magic number note: the 900 is the dimension of the board
 		
 		/*
-		 * view board cell dimensions.
+		 * view board cell dimensions, it may be a bad idea to have that JPanel cast.
 		 */
-		double x = 900/cells_x;
-		double y = 900/cells_y;
+		double x = ((JPanel)e.getSource()).getWidth()/cells_x;
+		double y = ((JPanel)e.getSource()).getHeight()/cells_y;
 		
 		model.toggleNode((int)(e.getX()/x), (int)(e.getY()/y));
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//No necessary action
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//No necessary action
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		//No necessary action
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		//No necessary action
 		
 	}
 

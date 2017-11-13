@@ -16,19 +16,17 @@ public class View extends JFrame implements Observer
 {
 	/*
 	 * stupid globals for bad code. How do I make the size of the board dynamic?
+	 * TODO: Add support for window resizing
 	 */
-	private static final int BOARD_HEIGHT = 900;
-	private static final int BOARD_WIDTH = 900;
+	private static final int BOARD_HEIGHT = 500;
+	private static final int BOARD_WIDTH = 650;
 	private static final int CELLS_X = 20;
 	private static final int CELLS_Y = 20;
 	
 	private JPanel gui = new JPanel(new BorderLayout(1, 3));
-	private JPanel board = new JPanel();
-	private JButton cell[][] = new JButton[10][10];
 
 	private JPanel menu = new JPanel();
 	private JButton newGame = new JButton("New Game");
-	private JButton instructions = new JButton("Instructions");
 	private JButton solve = new JButton("Solve");
 	private JLabel pathLabel = new JLabel("Path: ");
 	private JButton path = new JButton("Path");
@@ -48,7 +46,7 @@ public class View extends JFrame implements Observer
 	private JTextField commandLine = new JTextField();
 	private JButton commandEnter = new JButton("Enter Commands");
 
-	private JButton[] buttonArray = { newGame, instructions, solve, path,
+	private JButton[] buttonArray = { newGame, solve, path,
 			robot, source, destination, commandEnter };
 	
 	//at the end of the day the Board class functions as the actual view.
@@ -66,16 +64,15 @@ public class View extends JFrame implements Observer
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
-		this.setBounds(0, 0, 900, 900);
+		this.setBounds(0, 0, 700, 700);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Robot Game");
 		this.add(gui);
-
+		this.setBackground(Color.CYAN);//debugging
 		/* Resizing Icons for board */
 		
 		menu = new JPanel(new FlowLayout());
 		menu.add(newGame);
-		menu.add(instructions);
 		menu.add(solve);
 		menu.add(pathLabel);
 		menu.add(path);
@@ -85,7 +82,7 @@ public class View extends JFrame implements Observer
 		menu.add(destination);
 		gui.add(menu, BorderLayout.NORTH);
 
-		testBoard = new Board(900, 900, 20, 20); //CHANGE THE 20, NO MAGIC NUMBERS
+		testBoard = new Board(BOARD_WIDTH, BOARD_HEIGHT, CELLS_X, CELLS_Y); //CHANGE THE 20, NO MAGIC NUMBERS
 		//gui.add(board, BorderLayout.CENTER);
 		gui.add(testBoard);
 
@@ -105,7 +102,6 @@ public class View extends JFrame implements Observer
 		inputPanel.add(commandSection, BorderLayout.NORTH);
 		inputPanel.add(alertSection, BorderLayout.SOUTH);
 		gui.add(inputPanel, BorderLayout.SOUTH);
-
 		// Draw new board
 	}
 
@@ -218,39 +214,38 @@ public class View extends JFrame implements Observer
 	
 	private class Board extends JPanel
 	{
-		//todo
-		private int x;
-		private int y;
 		private int cellsX;
 		private int cellsY;
 		
 		public Board(int x, int y, int cellsX, int cellsY)//x, y dimensions for board size and number of cells per column and row.
 		{
-			this.x = x;
-			this.y = y;
 			this.cellsX = cellsX;
 			this.cellsY = cellsY;
+			//this.setSize(x, y); setsize is futile here, it gets overridden by the layout manager.
+			this.setMaximumSize(new Dimension(x, y));
+			this.setBackground(Color.PINK);
 		}
 		
 		public void paint(Graphics g)
 		{
 			g.setColor(Color.GRAY);
-			g.fillRect(0,0,this.x, this.y);
+			g.fillRect(0,0,(this.getWidth()/cellsX)*this.cellsX, (this.getHeight()/cellsY)*this.cellsY);
 			if(View.this.ib == null)
 				return;
 			for(Point point : View.this.ib.nodePoints)
 			{
 				g.setColor(Color.WHITE);
-				g.fillRect((BOARD_WIDTH/cellsX) * point.x, (BOARD_HEIGHT/cellsY) * point.y, BOARD_WIDTH/cellsX, BOARD_HEIGHT/cellsY);
+				g.fillRect((this.getWidth()/cellsX) * point.x, (this.getHeight()/cellsY) * point.y,
+						this.getWidth()/cellsX, this.getHeight()/cellsY);
 			}
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub, method for updating the board representation
+		//method for updating the board representation
 		System.out.println("update called");
 		this.ib = (InfoBoard)o;
-		testBoard.repaint();
+		testBoard.repaint();//I'm not sure if I should be calling this directly.
 	}
 }
