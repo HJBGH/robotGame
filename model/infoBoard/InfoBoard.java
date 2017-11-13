@@ -14,6 +14,8 @@ public class InfoBoard extends Observable{
 	//hashset for storing relevant information
 	public HashSet<Point> nodePoints = new HashSet<Point>();
 	private HashSet<Point> prizePoints = new HashSet<Point>();
+	private HashSet<Point> heroPoints = new HashSet<Point>(); //locations of solvers
+	public HashSet<Point> destPoints = new HashSet<Point>();
 	public void addNodePoint(int x, int y)
 	{
 		//we risk adding loads of duplicates here
@@ -26,33 +28,35 @@ public class InfoBoard extends Observable{
 	{
 		//iterate through the hashset, see if there already exists and object like this.
 		nodePoints.remove(new Point(x, y));//hopefully Equals() is defined in point based on X and Y co-ordinates
+		destPoints.remove(new Point(x, y));
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void addPrizePoint(int x, int y)
 	{
+		prizePoints.add(new Point(x, y));
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void removePrize(int x, int y)
 	{
-		//TODO
+		prizePoints.remove(new Point(x, y));
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void addDestination(int x, int y)
 	{
-		//TODO
+		destPoints.add(new Point(x, y));
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeDestination(int x, int y)
 	{
-		//TODO
+		destPoints.remove(new Point(x, y));
 		setChanged();
 		notifyObservers();
 	}

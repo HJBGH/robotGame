@@ -117,6 +117,7 @@ public class Model implements ModelInterface{
 			this.toggleNode(x, y);
 		}
 		solver.setPosition(board[x][y]);
+		//this.ib.
 		//set the start point of the solver to this node.
 	}
 
@@ -127,7 +128,20 @@ public class Model implements ModelInterface{
 
 	@Override
 	public void toggleGoalNode(int x, int y) {
+		System.out.println("toggling goal - model");
+		if(board[x][y] == null)
+		{
+			this.toggleNode(x, y);
+		}
 		board[x][y].toggleGoal();
+		if(board[x][y].isGoal())
+		{
+			this.ib.addDestination(x, y);
+		}
+		else
+		{
+			this.ib.removeDestination(x, y);
+		}
 	}
 
 	@Override
@@ -138,6 +152,7 @@ public class Model implements ModelInterface{
 	@Override
 	public Prize removePrize(int x, int y) {
 		Prize prize = board[x][y].removePrize();
+		//update info board
 		return prize; //technically we don't need to be passing this reference everywhere
 	}
 

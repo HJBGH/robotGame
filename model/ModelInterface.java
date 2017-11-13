@@ -7,7 +7,7 @@ public interface ModelInterface
 	//Combine these two node methods into a toggle node method.
 	public void toggleNode(int x, int y); //Toggle the existance node with the co-ordinates x,y
 	
-	//turn te hero method into a toggle as well
+	//turn the hero method into a toggle as well
 	public void addHero(int x, int y);
 	public void removeHero(int x, int y);
 	

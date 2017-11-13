@@ -69,6 +69,7 @@ public class Node implements NodeInterface{
 	public void toggleGoal()
 	{
 		this.isGoal = !this.isGoal;
+		System.out.println("Goal toggled to :" + isGoal);
 	}
 	
 }

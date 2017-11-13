@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import robotGame.model.*;
+import robotGame.model.infoBoard.InfoBoard;
 import robotGame.model.node.Node;
 
 import org.junit.Test;
@@ -119,7 +120,7 @@ public class ModelTests {
 		//test adding and removing nodes in a model.
 		Model testModel = null;
 		try {
-			testModel = new Model(10, 10, null);
+			testModel = new Model(10, 10, new InfoBoard());
 		} catch (ModelException e) {
 			fail("Model constructor failed");
 			e.printStackTrace();

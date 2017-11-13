@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 /*
- * View for the robot game
+ * View for the robot game, this entire class is spaghetti code.
  */
 public class View extends JFrame implements Observer 
 {
@@ -31,8 +31,8 @@ public class View extends JFrame implements Observer
 	private JLabel pathLabel = new JLabel("Path: ");
 	private JButton path = new JButton("Path");
 	private JLabel objectsLabel = new JLabel("Objects: ");
-	private JButton robot = new JButton("Robot");
-	private JButton source = new JButton("Source");
+	private JButton hero = new JButton("Hero");
+	private JButton prize = new JButton("Prize");
 	private JButton destination = new JButton("Destination");
 
 	private JPanel inputPanel = new JPanel();
@@ -45,14 +45,12 @@ public class View extends JFrame implements Observer
 	private JLabel commandLineLabel = new JLabel("Enter commands here: ");
 	private JTextField commandLine = new JTextField();
 	private JButton commandEnter = new JButton("Enter Commands");
-
-	private JButton[] buttonArray = { newGame, solve, path,
-			robot, source, destination, commandEnter };
 	
 	//at the end of the day the Board class functions as the actual view.
 	private Board testBoard;
 	private InfoBoard ib;
 
+	private JButton[] buttons = {newGame, commandEnter, destination, path, hero, prize, solve};
 	public View()
 	{
 		/*
@@ -60,7 +58,16 @@ public class View extends JFrame implements Observer
 		 * their size, margin, etc. This needs a parameter for the number of cells
 		 * I should probably re-think it.
 		 */
-
+		/*
+		 * Set action commands, used to figure out which buttons do what.
+		 */
+		this.newGame.setActionCommand("NG");
+		this.commandEnter.setActionCommand("ENTER");
+		this.destination.setActionCommand("DEST");
+		this.path.setActionCommand("NODE");
+		this.hero.setActionCommand("HERO");
+		this.prize.setActionCommand("PRIZE");
+		this.prize.setActionCommand("SOLVE");
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
@@ -77,8 +84,8 @@ public class View extends JFrame implements Observer
 		menu.add(pathLabel);
 		menu.add(path);
 		menu.add(objectsLabel);
-		menu.add(robot);
-		menu.add(source);
+		menu.add(hero);
+		menu.add(prize);
 		menu.add(destination);
 		gui.add(menu, BorderLayout.NORTH);
 
@@ -144,8 +151,8 @@ public class View extends JFrame implements Observer
 	{
 		solve.setEnabled(false);
 		path.setEnabled(false);
-		robot.setEnabled(false);
-		source.setEnabled(false);
+		hero.setEnabled(false);
+		prize.setEnabled(false);
 		destination.setEnabled(false);
 		commandEnter.setEnabled(false);
 		commandLine.setText("");
@@ -156,8 +163,8 @@ public class View extends JFrame implements Observer
 	{
 		solve.setEnabled(true);
 		path.setEnabled(true);
-		robot.setEnabled(true);
-		source.setEnabled(true);
+		hero.setEnabled(true);
+		prize.setEnabled(true);
 		destination.setEnabled(true);
 		commandEnter.setEnabled(true);
 		alertBox.setText("");
@@ -192,13 +199,14 @@ public class View extends JFrame implements Observer
 	// adding listeners for the regular buttons.
 	public void addButtonListener(ActionListener general_ear)
 	{
-		for (int i = 0; i < buttonArray.length; i++)
+		for(JButton button : buttons)
 		{
-			buttonArray[i].addActionListener(general_ear);
+			button.addActionListener(general_ear);//idk why this is called general_ear
 		}
 	}
 
 	// getting the clicked button
+	/*
 	public String getClickedButton(ActionEvent buttonEvent)
 	{
 		Object source = buttonEvent.getSource();
@@ -210,7 +218,7 @@ public class View extends JFrame implements Observer
 			}
 		}
 		return ("Unknown button clicked.");
-	}
+	}*/
 	
 	private class Board extends JPanel
 	{
@@ -236,6 +244,12 @@ public class View extends JFrame implements Observer
 			{
 				g.setColor(Color.WHITE);
 				g.fillRect((this.getWidth()/cellsX) * point.x, (this.getHeight()/cellsY) * point.y,
+						this.getWidth()/cellsX, this.getHeight()/cellsY);
+			}
+			for(Point dest : View.this.ib.destPoints)
+			{
+				g.setColor(Color.GREEN);
+				g.fillRect((this.getWidth()/cellsX) * dest.x, (this.getHeight()/cellsY) * dest.y,
 						this.getWidth()/cellsX, this.getHeight()/cellsY);
 			}
 		}
