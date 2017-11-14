@@ -15,7 +15,6 @@ public class Main
 	private static final int CELLS_Y = 20;
 	public static void main(String args[]) throws ModelException{
 		
-		//TODO: consider writing my own point / co-ordinate class
 		//Multithreading might be a worthwhile consideration
 		//The view should register itself with the model to recieve updates about events in the model.
 		//controller is bound to view to recieve input from the UI.

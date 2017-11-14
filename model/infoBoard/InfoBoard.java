@@ -13,7 +13,7 @@ public class InfoBoard extends Observable{
 	//make a method to notify the view of updates to this object
 	//hashset for storing relevant information
 	public HashSet<Point> nodePoints = new HashSet<Point>();
-	private HashSet<Point> prizePoints = new HashSet<Point>();
+	public HashSet<Point> prizePoints = new HashSet<Point>();
 	public Point heroPoint = null; //locations of solvers
 	public HashSet<Point> destPoints = new HashSet<Point>();
 	public void addNodePoint(int x, int y)
@@ -40,6 +40,13 @@ public class InfoBoard extends Observable{
 		notifyObservers();
 	}
 	
+	public void setHeroPoint(Point point)
+	{
+		this.heroPoint = point;
+		setChanged();
+		notifyObservers();
+	}
+	
 	public void addPrizePoint(int x, int y)
 	{
 		prizePoints.add(new Point(x, y));
@@ -47,7 +54,7 @@ public class InfoBoard extends Observable{
 		notifyObservers();
 	}
 	
-	public void removePrize(int x, int y)
+	public void removePrizePoint(int x, int y)
 	{
 		prizePoints.remove(new Point(x, y));
 		setChanged();

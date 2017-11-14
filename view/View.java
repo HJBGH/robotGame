@@ -67,7 +67,7 @@ public class View extends JFrame implements Observer
 		this.path.setActionCommand("NODE");
 		this.hero.setActionCommand("HERO");
 		this.prize.setActionCommand("PRIZE");
-		this.prize.setActionCommand("SOLVE");
+		this.solve.setActionCommand("SOLVE");
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
@@ -242,7 +242,7 @@ public class View extends JFrame implements Observer
 				return;
 			for(Point point : View.this.ib.nodePoints)
 			{
-				g.setColor(Color.WHITE);
+				g.setColor(Color.DARK_GRAY);
 				g.fillRect((this.getWidth()/cellsX) * point.x, (this.getHeight()/cellsY) * point.y,
 						this.getWidth()/cellsX, this.getHeight()/cellsY);
 			}
@@ -252,9 +252,20 @@ public class View extends JFrame implements Observer
 				g.fillRect((this.getWidth()/cellsX) * dest.x, (this.getHeight()/cellsY) * dest.y,
 						this.getWidth()/cellsX, this.getHeight()/cellsY);
 			}
-			g.setColor(Color.BLUE);
-			g.fillOval((this.getWidth()/cellsX) * View.this.ib.heroPoint.x, (this.getHeight()/cellsY) * View.this.ib.heroPoint.y,
+			for(Point pp : View.this.ib.prizePoints) //pp for prize point
+			{
+				g.setColor(Color.YELLOW);
+				g.fillOval((this.getWidth()/cellsX) * pp.x,
+						(this.getHeight()/cellsY) * pp.y,
+						(this.getWidth()/cellsX)/2, (this.getHeight()/cellsY)/2);
+			}
+			if(View.this.ib.heroPoint != null)
+			{
+				g.setColor(Color.BLUE);
+				g.fillOval((this.getWidth()/cellsX) * View.this.ib.heroPoint.x,
+						(this.getHeight()/cellsY) * View.this.ib.heroPoint.y,
 						this.getWidth()/cellsX, this.getHeight()/cellsY);
+			}
 		}
 	}
 

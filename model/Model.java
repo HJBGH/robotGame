@@ -107,7 +107,7 @@ public class Model implements ModelInterface{
 	}
 
 	@Override
-	public void addHero(int x, int y)
+	public void toggleHero(int x, int y)
 	{
 		
 		//Make sure we have a legitimate place to put the hero.
@@ -116,14 +116,18 @@ public class Model implements ModelInterface{
 		{
 			this.toggleNode(x, y);
 		}
+		if(solver.position != null)
+		{
+			if(solver.position.equals(board[x][y]))
+			{
+				solver.setPosition(null);
+				this.ib.setHeroPoint(null);
+				return;
+			}
+		}
 		solver.setPosition(board[x][y]);
 		this.ib.setHeroPoint(x, y);
 		//set the start point of the solver to this node.
-	}
-
-	@Override
-	public void removeHero(int x, int y) {
-		solver.setPosition(null);
 	}
 
 	@Override
@@ -144,6 +148,27 @@ public class Model implements ModelInterface{
 		}
 	}
 
+	
+	@Override
+	public void togglePrize(int x, int y)
+	{
+		if(board[x][y] == null)
+		{
+			this.toggleNode(x, y);
+		}
+		if(board[x][y].hasPrize() == false)
+		{
+			board[x][y].addPrize(new Prize());
+			this.ib.addPrizePoint(x, y);
+		}
+		else
+		{
+			board[x][y].removePrize();
+			this.ib.removePrizePoint(x, y);
+		}
+	}
+	
+	//These should be private
 	@Override
 	public void addPrize(int x, int y) {
 		board[x][y].addPrize(new Prize()); //this will fail if the node is null

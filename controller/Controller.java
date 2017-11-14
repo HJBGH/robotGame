@@ -49,9 +49,11 @@ public class Controller implements MouseListener, ActionListener
 			break;
 		case HERO:
 			System.out.println("Toggling hero location - Controller");
-			model.addHero((int)(e.getX()/x), (int)(e.getY()/y));
+			model.toggleHero((int)(e.getX()/x), (int)(e.getY()/y));
 			break;
 		case PRIZE:
+			System.out.println("Adding prize");
+			model.togglePrize((int)(e.getX()/x), (int)(e.getY()/y));
 			break;
 		default:
 			System.out.println("something has gone horribly awry");
