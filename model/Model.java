@@ -68,7 +68,15 @@ public class Model implements ModelInterface{
 			}
 			removed.deleteAllNeighbours();
 			this.board[x][y] = null; //point to null;
+			//every time the walkable parts of the board change we should validate the position of the solver
+			if(!solver.validatePosition(removed))
+			{
+				//maybe use toggle hero?
+				this.solver.setPosition(null);
+				this.ib.setHeroPoint(null);
+			}
 			removed = null; //all mentions of the node removed
+			
 			
 			this.ib.removeNodePoint(x, y);
 		}
@@ -200,6 +208,16 @@ public class Model implements ModelInterface{
 			position = node;
 		}
 		
+		//If the arguement node is the same instance as the current position, set the current position to null
+		//This is probably bad code, as it's only used once the only point I use it in.
+		public boolean validatePosition(Node node)
+		{
+			if(Model.this.board[this.position.x][this.position.y] == this.position)
+			{
+				return true;
+			}
+			return false;
+		}
 		//this will be used in the solve method
 		private void setPrize(Prize prize)
 		{
