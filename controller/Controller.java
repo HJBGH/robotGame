@@ -103,6 +103,7 @@ public class Controller implements MouseListener, ActionListener
 			break;
 		case "SOLVE":
 			model.solve();
+			System.out.println("solve called");
 			break;
 		default:
 			System.out.println("unhandled action command");

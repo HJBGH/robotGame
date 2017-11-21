@@ -62,7 +62,7 @@ public class Model implements ModelInterface{
 			removed.deleteAllNeighbours();
 			this.board[x][y] = null; //point to null;
 			//every time the walkable parts of the board change we should validate the position of the solver
-			if(!solver.validatePosition(removed))
+			if(!solver.validatePosition())
 			{
 				//maybe use toggle hero?
 				this.solver.setPosition(null);
@@ -184,8 +184,10 @@ public class Model implements ModelInterface{
 
 	@Override
 	public void solve() {
+		//create a thread for the solver and run that sumbith
 		try {
-			solver.solve();
+			Thread solverThread = new Thread(this.solver, "Solver");
+			solverThread.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -193,7 +195,8 @@ public class Model implements ModelInterface{
 	}
 	
 	//figure out how to set changed from within this class
-	private class Hero
+	//set this to be another thread
+	private class Hero implements Runnable
 	{
 		private Node position = null;
 		private Prize prize = null;
@@ -203,21 +206,26 @@ public class Model implements ModelInterface{
 		//private ArrayList<>
 		public void setPosition(Node node)
 		{
-			Model.this.ib.setHeroPoint(node.x, node.y);
+			if(node != null)
+			{
+				Model.this.ib.setHeroPoint(node.x, node.y);
+			} //this code is the perfect example of why you shouldn't use null values to represent blank nodes
 			position = node;
 			//we might have to update the InfoBoard from in here
 		}
 		
 		//If the argument node is the same instance as the current position, set the current position to null
 		//This is probably bad code, as it's only used once the only point I use it in.
-		public boolean validatePosition(Node node)
+		public boolean validatePosition()
 		{
 			//this will return true if both variables are null, it shouldn't
-			if(Model.this.board[this.position.x][this.position.y] == this.position)
-			{
+			if(this.position == null)
 				return true;
+			if(Model.this.board[this.position.x][this.position.y] == null)
+			{
+				return false;
 			}
-			return false;
+			return true;
 		}
 		//this will be used in the solve method
 		private void setPrize(Prize prize)
@@ -245,11 +253,6 @@ public class Model implements ModelInterface{
 		
 		public void dfs_solve(Node currentNode)
 		{
-			while(Model.this.ib.hasChanged())
-			{
-				System.out.println("does this even register with the view?");
-			}
-
 			System.out.println("Traversing :" + currentNode.x + ", " + currentNode.y);
 			//DFS for prize
 			if(this.prize == null)
@@ -278,6 +281,15 @@ public class Model implements ModelInterface{
 			}
 			//follow this up with a second recursion for destination finding.
 			System.out.println("Maze solving not yet implemented");
+		}
+
+		@Override
+		public void run() {
+			try {
+				this.solve();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
