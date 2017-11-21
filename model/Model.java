@@ -245,6 +245,11 @@ public class Model implements ModelInterface{
 		
 		public void dfs_solve(Node currentNode)
 		{
+			while(Model.this.ib.hasChanged())
+			{
+				System.out.println("does this even register with the view?");
+			}
+
 			System.out.println("Traversing :" + currentNode.x + ", " + currentNode.y);
 			//DFS for prize
 			if(this.prize == null)
@@ -261,13 +266,13 @@ public class Model implements ModelInterface{
 				}
 				for(Node n : currentNode.getNeighbours())
 				{
-					if(!this.closed.contains(n))
+					if(!this.closed.contains(n) && prize == null)
 					{
 						dfs_solve(n);
 					}
 					
 				}
-				setPosition(currentNode); //visualize the backtracking
+				//setPosition(currentNode); //visualize the backtracking
 				return;
 
 			}

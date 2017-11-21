@@ -236,6 +236,7 @@ public class View extends JFrame implements Observer
 		
 		public void paint(Graphics g)
 		{
+			System.out.println("repainting");
 			g.setColor(Color.GRAY);
 			g.fillRect(0,0,(this.getWidth()/cellsX)*this.cellsX, (this.getHeight()/cellsY)*this.cellsY);
 			if(View.this.ib == null)
