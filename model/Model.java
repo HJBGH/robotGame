@@ -42,13 +42,6 @@ public class Model implements ModelInterface{
 		this.ib = infoBoard;
 	}
 	
-	//board returner AAAAARRRRGH DELET THIS
-	/*
-	public Node[][] getBoard(){
-		return board; //<-- !! privacy leak FIX THIS SHIT
-	}*/
-	
-	
 	@Override
 	public void toggleNode(int x, int y)
 	{
@@ -133,8 +126,8 @@ public class Model implements ModelInterface{
 				return;
 			}
 		}
+		//The solver is responsible for updating the board about it's position.
 		solver.setPosition(board[x][y]);
-		this.ib.setHeroPoint(x, y);
 		//set the start point of the solver to this node.
 	}
 
@@ -191,7 +184,12 @@ public class Model implements ModelInterface{
 
 	@Override
 	public void solve() {
-		solver.solve();
+		try {
+			solver.solve();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//figure out how to set changed from within this class
@@ -202,16 +200,19 @@ public class Model implements ModelInterface{
 		
 		//variables used for finding solution
 		private ArrayList<Node> closed = new ArrayList<Node>();
-		
+		//private ArrayList<>
 		public void setPosition(Node node)
 		{
+			Model.this.ib.setHeroPoint(node.x, node.y);
 			position = node;
+			//we might have to update the InfoBoard from in here
 		}
 		
-		//If the arguement node is the same instance as the current position, set the current position to null
+		//If the argument node is the same instance as the current position, set the current position to null
 		//This is probably bad code, as it's only used once the only point I use it in.
 		public boolean validatePosition(Node node)
 		{
+			//this will return true if both variables are null, it shouldn't
 			if(Model.this.board[this.position.x][this.position.y] == this.position)
 			{
 				return true;
@@ -227,22 +228,50 @@ public class Model implements ModelInterface{
 		//use DFS to solve mazes, we can do this recursively. But it won't preserve the starting state
 		//there's going to be two solutions. solving to get the prize, and solving to find the destination
 		//need to handle invalid problems. i.e. maps with no solutions
-		public void solve()
+		public void solve() throws Exception //TODO: add custom exception
 		{
-			//DFS for prize
-			if(prize == null)
+			//publicly facing solve method, checks that the solver has a starting position then
+			//calls the DFS solve method 
+			//probably just better to validate the position.
+			if(this.position == null)
 			{
-				//n for neighbours
+				throw new Exception("Null solver position");
+			}
+			dfs_solve(this.position);
+			this.closed = new ArrayList<Node>();
+			System.out.println("Done solving");
+			
+		}
+		
+		public void dfs_solve(Node currentNode)
+		{
+			System.out.println("Traversing :" + currentNode.x + ", " + currentNode.y);
+			//DFS for prize
+			if(this.prize == null)
+			{
+				//n for neighbours, as far as I remember the .getNeighbours method returns a clone, not the actual
+				//neighbours arraylist pointer.
+				setPosition(currentNode);
+				this.closed.add(currentNode);
 				if(position.hasPrize())
 				{
 					//idk if this will work properly
 					setPrize(Model.this.removePrize(position.x, position.y));
-					//TODO set changed here! maybe not. Remove prize already removes it.
+					return;
 				}
-				ArrayList<Node> n = position.getNeighbours();
-				//we're going to have to set change in here. perhaps solver should just be its own method.
-				//but that prevents future multithreading.
+				for(Node n : currentNode.getNeighbours())
+				{
+					if(!this.closed.contains(n))
+					{
+						dfs_solve(n);
+					}
+					
+				}
+				setPosition(currentNode); //visualize the backtracking
+				return;
+
 			}
+			//follow this up with a second recursion for destination finding.
 			System.out.println("Maze solving not yet implemented");
 		}
 	}

@@ -101,6 +101,9 @@ public class Controller implements MouseListener, ActionListener
 		case "DEST":
 			this.currentInstruction = Instruction.DEST;
 			break;
+		case "SOLVE":
+			model.solve();
+			break;
 		default:
 			System.out.println("unhandled action command");
 			break;
