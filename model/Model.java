@@ -186,8 +186,7 @@ public class Model implements ModelInterface{
 	public void solve() {
 		//create a thread for the solver and run that sumbith
 		try {
-			Thread solverThread = new Thread(this.solver, "Solver");
-			solverThread.start();
+			this.solver.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -198,6 +197,8 @@ public class Model implements ModelInterface{
 	//set this to be another thread
 	private class Hero implements Runnable
 	{
+		private Thread thread;
+		private String name = "Solver";
 		private Node position = null;
 		private Prize prize = null;
 		
@@ -260,6 +261,12 @@ public class Model implements ModelInterface{
 				//n for neighbours, as far as I remember the .getNeighbours method returns a clone, not the actual
 				//neighbours arraylist pointer.
 				setPosition(currentNode);
+				try {
+					this.wait(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				this.closed.add(currentNode);
 				if(position.hasPrize())
 				{
@@ -284,11 +291,25 @@ public class Model implements ModelInterface{
 		}
 
 		@Override
-		public void run() {
-			try {
+		public void run() 
+		{
+			try 
+			{
 				this.solve();
-			} catch (Exception e) {
+			} 
+			catch (Exception e) 
+			{
 				e.printStackTrace();
+			}
+		}
+		
+		public void start()
+		{
+			System.out.println("creating thread - solver start method");
+			if(thread == null)
+			{
+				thread = new Thread(this, name);
+				thread.start();
 			}
 		}
 	}

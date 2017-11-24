@@ -274,7 +274,9 @@ public class View extends JFrame implements Observer
 	public void update(Observable o, Object arg) {
 		//method for updating the board representation
 		System.out.println("update called");
-		this.ib = (InfoBoard)o;
-		testBoard.repaint();//I'm not sure if I should be calling this directly.
+		if(this.ib == null)
+			this.ib = (InfoBoard)o;
+		//for some reason this gets deferred
+		testBoard.paintImmediately(this.getBounds());//I'm not sure if I should be calling this directly.
 	}
 }

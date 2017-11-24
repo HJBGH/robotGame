@@ -36,7 +36,7 @@ public class InfoBoard extends Observable{
 	public void setHeroPoint(int x, int y)
 	{
 		this.heroPoint = new Point(x, y);
-		System.out.println("Setting hero point");
+		System.out.println("Setting hero point to " + x + ","+y);
 		setChanged();
 		notifyObservers();
 	}
