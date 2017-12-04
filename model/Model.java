@@ -248,25 +248,22 @@ public class Model implements ModelInterface{
 			}
 			dfs_solve(this.position);
 			this.closed = new ArrayList<Node>();
-			System.out.println("Done solving");
+			System.out.println("Model - Done solving");
 			
 		}
 		
-		public void dfs_solve(Node currentNode)
+		//At large board sizes, this has the potential to construct truly ridiculous frame
+		//stack sizes
+		private void dfs_solve(Node currentNode)
 		{
-			System.out.println("Traversing :" + currentNode.x + ", " + currentNode.y);
+			System.out.println("Solver - Traversing :" + currentNode.x + ", " + currentNode.y);
+			Model.this.ib.AF.addStep(currentNode);//illustrate initial exploration of the node.
 			//DFS for prize
 			if(this.prize == null)
 			{
 				//n for neighbours, as far as I remember the .getNeighbours method returns a clone, not the actual
 				//neighbours arraylist pointer.
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				setPosition(currentNode);
+				position = currentNode;
 				this.closed.add(currentNode);
 				if(position.hasPrize())
 				{
@@ -282,12 +279,12 @@ public class Model implements ModelInterface{
 					}
 					
 				}
-				//setPosition(currentNode); //visualize the backtracking
-				return;
-
 			}
+			Model.this.ib.AF.addStep(currentNode);//illustrate backtracking
 			//follow this up with a second recursion for destination finding.
-			System.out.println("Maze solving not yet implemented");
+			
+			System.out.println("Maze solving not fully implemented");
+			return;
 		}
 
 		@Override

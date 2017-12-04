@@ -24,6 +24,7 @@ public class AnimationChainFactory{
 	//returns the animation chain and prepares the factory for constructing the next chain.
 	public AnimationNode getAnimationChain()
 	{
+		System.out.println("returning current animation chain and clearing factory floor");
 		this.current = null;
 		this.previousNode = null;
 		AnimationNode temp = head;
@@ -34,6 +35,7 @@ public class AnimationChainFactory{
 	public void addStep(Node modelNode)
 	{
 		//first step in chain, adding the initial position of the solver
+		System.out.println("adding new animation node to chain");
 		if(modelNode == null)
 		{
 			return;
@@ -56,7 +58,7 @@ public class AnimationChainFactory{
 			this.current = head;
 			this.previousNode = modelNode;
 		}
-		//recording the remainder of the solvers moves
+		//recording the remainder of the solvers' moves
 		else
 		{
 			AnimationNode newAnimNode = null;

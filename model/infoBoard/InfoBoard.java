@@ -1,6 +1,7 @@
 package robotGame.model.infoBoard;
 
 import java.util.Observable;
+import robotGame.utils.*;
 import java.util.HashSet;
 import java.awt.Point;
 /*
@@ -12,10 +13,12 @@ public class InfoBoard extends Observable{
 	//member variables will represent information about the model.
 	//make a method to notify the view of updates to this object
 	//hashset for storing relevant information
+	public AnimationChainFactory AF = new AnimationChainFactory();
 	public HashSet<Point> nodePoints = new HashSet<Point>();
 	public HashSet<Point> prizePoints = new HashSet<Point>();
 	public Point heroPoint = null; //locations of solvers
 	public HashSet<Point> destPoints = new HashSet<Point>();
+	private boolean solved = false;
 	public void addNodePoint(int x, int y)
 	{
 		//we risk adding loads of duplicates here
@@ -36,7 +39,7 @@ public class InfoBoard extends Observable{
 	public void setHeroPoint(int x, int y)
 	{
 		this.heroPoint = new Point(x, y);
-		System.out.println("Setting hero point to " + x + ","+y);
+		System.out.println("IB - Setting hero point to " + x + ","+y);
 		setChanged();
 		notifyObservers();
 	}
@@ -74,5 +77,17 @@ public class InfoBoard extends Observable{
 		destPoints.remove(new Point(x, y));
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void toggleSolved()
+	{
+		this.solved = !this.solved;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public boolean getSolved()
+	{
+		return this.solved;
 	}
 }

@@ -71,7 +71,7 @@ public class View extends JFrame implements Observer
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
-		this.setBounds(0, 0, 700, 705);
+		this.gui.setSize(new Dimension(1000, 800));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Robot Game");
 		this.add(gui);
@@ -109,7 +109,7 @@ public class View extends JFrame implements Observer
 		inputPanel.add(commandSection, BorderLayout.NORTH);
 		inputPanel.add(alertSection, BorderLayout.SOUTH);
 		gui.add(inputPanel, BorderLayout.SOUTH);
-		// Draw new board
+		this.pack();
 	}
 
 	public int getNewGameOption()
@@ -256,19 +256,24 @@ public class View extends JFrame implements Observer
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg)
+	{
 		//method for updating the board representation
 		System.out.println("update called");
 		if(this.ib == null)
 			this.ib = (InfoBoard)o;
 		//for some reason this gets deferred
-		testBoard.repaint(this.getBounds());//I'm not sure if I should be calling this directly.
+		this.repaint();//I'm not sure if I should be calling this directly.
+		if(this.ib.getSolved())
+		{
+			playAnimation();//play the animation according the Animation chain
+		}
 	}
 	
 	//this will get called in the update method, as the infoboard will be updated once the animation chain 
 	//is finished constructing
-	public void playAnimation()
+	private void playAnimation()
 	{
-		//TODO: implement this.
+		System.out.println("not yet implemented");
 	}
 }
