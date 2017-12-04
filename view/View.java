@@ -18,7 +18,7 @@ public class View extends JFrame implements Observer
 	 * stupid globals for bad code. How do I make the size of the board dynamic?
 	 * TODO: Add support for window resizing
 	 */
-	private static final int BOARD_HEIGHT = 500;
+	private static final int BOARD_HEIGHT = 505;
 	private static final int BOARD_WIDTH = 650;
 	private static final int CELLS_X = 20;
 	private static final int CELLS_Y = 20;
@@ -71,7 +71,7 @@ public class View extends JFrame implements Observer
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
-		this.setBounds(0, 0, 700, 700);
+		this.setBounds(0, 0, 700, 705);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Robot Game");
 		this.add(gui);
@@ -204,21 +204,6 @@ public class View extends JFrame implements Observer
 			button.addActionListener(general_ear);//idk why this is called general_ear
 		}
 	}
-
-	// getting the clicked button
-	/*
-	public String getClickedButton(ActionEvent buttonEvent)
-	{
-		Object source = buttonEvent.getSource();
-		for (int i = 0; i < buttonArray.length; i++)
-		{
-			if (buttonArray[i] == source)
-			{
-				return buttonArray[i].getText();
-			}
-		}
-		return ("Unknown button clicked.");
-	}*/
 	
 	private class Board extends JPanel
 	{
@@ -277,6 +262,13 @@ public class View extends JFrame implements Observer
 		if(this.ib == null)
 			this.ib = (InfoBoard)o;
 		//for some reason this gets deferred
-		testBoard.paintImmediately(this.getBounds());//I'm not sure if I should be calling this directly.
+		testBoard.repaint(this.getBounds());//I'm not sure if I should be calling this directly.
+	}
+	
+	//this will get called in the update method, as the infoboard will be updated once the animation chain 
+	//is finished constructing
+	public void playAnimation()
+	{
+		//TODO: implement this.
 	}
 }

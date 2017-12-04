@@ -260,13 +260,13 @@ public class Model implements ModelInterface{
 			{
 				//n for neighbours, as far as I remember the .getNeighbours method returns a clone, not the actual
 				//neighbours arraylist pointer.
-				setPosition(currentNode);
 				try {
-					this.wait(1000);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				setPosition(currentNode);
 				this.closed.add(currentNode);
 				if(position.hasPrize())
 				{
