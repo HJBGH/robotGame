@@ -249,7 +249,7 @@ public class Model implements ModelInterface{
 			dfs_solve(this.position);
 			this.closed = new ArrayList<Node>();
 			System.out.println("Model - Done solving");
-			
+			Model.this.ib.toggleSolved();
 		}
 		
 		//At large board sizes, this has the potential to construct truly ridiculous frame

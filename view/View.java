@@ -2,6 +2,9 @@ package robotGame.view;
 
 import robotGame.model.*;
 import robotGame.model.infoBoard.InfoBoard;
+import robotGame.view.animation.AnimationNode;
+import robotGame.view.animation.XanimationNode;
+import robotGame.view.animation.YanimationNode;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -71,7 +74,7 @@ public class View extends JFrame implements Observer
 		// Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// used if you want to make frame fullscreen - need to import dimension
 		// first
-		this.gui.setSize(new Dimension(1000, 800));
+		this.setSize(new Dimension(1000, 700));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Robot Game");
 		this.add(gui);
@@ -109,7 +112,7 @@ public class View extends JFrame implements Observer
 		inputPanel.add(commandSection, BorderLayout.NORTH);
 		inputPanel.add(alertSection, BorderLayout.SOUTH);
 		gui.add(inputPanel, BorderLayout.SOUTH);
-		this.pack();
+		//this.pack();
 	}
 
 	public int getNewGameOption()
@@ -171,13 +174,14 @@ public class View extends JFrame implements Observer
 		commandLine.setText("");
 	}
 
+	/*
 	private Image resizeIcons(ImageIcon icon)
 	{
 		Image img = icon.getImage();
 		Image newImg = img.getScaledInstance(50, 50,
 				java.awt.Image.SCALE_SMOOTH);
 		return newImg;
-	}
+	}*/
 
 	// getters and setters
 	public String get_command()
@@ -205,6 +209,7 @@ public class View extends JFrame implements Observer
 		}
 	}
 	
+	@SuppressWarnings("serial")
 	private class Board extends JPanel
 	{
 		private int cellsX;
@@ -263,9 +268,18 @@ public class View extends JFrame implements Observer
 		if(this.ib == null)
 			this.ib = (InfoBoard)o;
 		//for some reason this gets deferred
-		this.repaint();//I'm not sure if I should be calling this directly.
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			@Override
+			
+			public void run()
+			{
+				repaint();//I'm not sure if I should be calling this directly.
+			}
+		});
 		if(this.ib.getSolved())
 		{
+			System.out.println("A problem was solved! playing animation");
 			playAnimation();//play the animation according the Animation chain
 		}
 	}
@@ -274,6 +288,25 @@ public class View extends JFrame implements Observer
 	//is finished constructing
 	private void playAnimation()
 	{
-		System.out.println("not yet implemented");
+		/*For each link in the chain, move the representation of the solver by a calculated
+		* amount */
+		int positionX = this.ib.heroPoint.x;
+		int positionY = this.ib.heroPoint.y;
+		//float change = 0.0f;
+		AnimationNode animChain = this.ib.AF.getAnimationChain();
+		//Timer timer = new Timer(33, this);
+		while(animChain != null)
+		{
+			if(animChain.getClass() == XanimationNode.class)
+			{
+				System.out.println("moving in x");
+			}
+			else if(animChain.getClass() == YanimationNode.class)
+			{
+				System.out.println("moving in y");
+			}
+			animChain = animChain.getNext();
+		}
+		System.out.println("finished animating");
 	}
 }
