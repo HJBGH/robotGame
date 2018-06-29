@@ -3,6 +3,9 @@ package robotGame.main;
 import robotGame.view.View;
 import robotGame.model.*;
 import robotGame.model.infoBoard.InfoBoard;
+
+import javax.swing.SwingUtilities;
+
 import robotGame.controller.*;
 
 /**
@@ -22,9 +25,16 @@ public class Main
 		
 		InfoBoard infoBoard = new InfoBoard();
 		Model theModel = new Model(CELLS_X, CELLS_Y, infoBoard);
-		View theView = new View();
+		final View theView = new View();
 		infoBoard.addObserver(theView);
-		theView.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable(){
+			
+			@Override
+			public void run()
+			{
+				theView.setVisible(true);
+			}
+		});
 		Controller theController = new Controller(theModel, CELLS_X, CELLS_Y);
 		theView.addBoardMouseListener(theController);
 		theView.addButtonListener(theController);

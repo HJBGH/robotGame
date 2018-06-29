@@ -261,12 +261,6 @@ public class Model implements ModelInterface{
 				//n for neighbours, as far as I remember the .getNeighbours method returns a clone, not the actual
 				//neighbours arraylist pointer.
 				setPosition(currentNode);
-				try {
-					this.wait(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				this.closed.add(currentNode);
 				if(position.hasPrize())
 				{
@@ -278,6 +272,9 @@ public class Model implements ModelInterface{
 				{
 					if(!this.closed.contains(n) && prize == null)
 					{
+						//recursive dfs isn't going to scale.
+						//Also this doesn't display correctly, the
+						//hero seems just to warp to the prize position
 						dfs_solve(n);
 					}
 					

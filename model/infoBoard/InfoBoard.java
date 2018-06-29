@@ -16,6 +16,7 @@ public class InfoBoard extends Observable{
 	public HashSet<Point> prizePoints = new HashSet<Point>();
 	public Point heroPoint = null; //locations of solvers
 	public HashSet<Point> destPoints = new HashSet<Point>();
+	
 	public void addNodePoint(int x, int y)
 	{
 		//we risk adding loads of duplicates here

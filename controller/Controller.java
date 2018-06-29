@@ -1,15 +1,15 @@
 package robotGame.controller;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-
+import static java.lang.System.out;
 import javax.swing.JPanel;
 
 import robotGame.model.*;
 import robotGame.model.Model;
 import robotGame.view.View;
 
-public class Controller implements MouseListener, ActionListener
+//these listeners need to be their own classes, violated cohesion
+public class Controller extends MouseAdapter implements ActionListener
 {
 	//TODO: Need an options enumeration for placing pieces
 	//this is going to need a reference to the model.
@@ -29,8 +29,8 @@ public class Controller implements MouseListener, ActionListener
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("MouseClicked");
+	public void mousePressed(MouseEvent e) {
+		System.out.println("MousePressed");
 		//need to do event processing in here
 		
 		/*
@@ -63,24 +63,8 @@ public class Controller implements MouseListener, ActionListener
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		//No necessary action
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		//No necessary action
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		//No necessary action
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		//No necessary action
-		
+	public void mouseClicked(MouseEvent e) {
+		out.println("FUG :-D");
 	}
 
 	@Override
